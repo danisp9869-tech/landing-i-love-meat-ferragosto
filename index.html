@@ -131,7 +131,10 @@ a{color:inherit}
 .offer h2 .l2{color:var(--gold)}
 .offer p.desc{color:var(--muted);font-size:17px;max-width:46ch;margin:0 0 26px}
 .offer p.desc b{color:#fff}
-.offer .price{font-family:"Anton",sans-serif;color:var(--gold);font-size:clamp(60px,11vw,96px);line-height:.9}
+/* Prezzo ingrandito rispetto alle altre landing (era 60/11vw/96): è l'unico
+   numero che conta. Anche al minimo, su uno schermo da 320px, "A soli 20€"
+   sta su una riga sola con una sessantina di pixel di margine. */
+.offer .price{font-family:"Anton",sans-serif;color:var(--gold);font-size:clamp(76px,13.5vw,124px);line-height:.9}
 .offer .price .pre{display:inline-block;font-family:"Inter",sans-serif;color:var(--muted);font-size:17px;font-weight:600;margin-right:10px;vertical-align:middle}
 .offer .btn{margin-top:26px}
 .offer .fine{margin-top:16px;color:var(--muted);font-size:12.5px;letter-spacing:.04em;text-transform:uppercase}
@@ -183,28 +186,6 @@ a{color:inherit}
   .galleria .tile:nth-child(n){grid-column:auto;grid-row:auto}
   .galleria .tile:nth-child(1),.galleria .tile:nth-child(6){grid-column:1 / 3;grid-row:span 2}
 }
-
-/* ---- RECENSIONE / STATS ---- */
-.review{display:grid;grid-template-columns:1.6fr 1fr;gap:20px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:20px;padding:30px}
-.review .quote{font-size:20px;line-height:1.5;color:var(--text);margin:12px 0}
-.review .who{color:var(--muted);font-size:14px}
-.review .stats{display:flex;gap:28px;justify-content:flex-end}
-.review .stat b{font-family:"Anton",sans-serif;color:var(--red);font-size:40px;line-height:1;display:block}
-.review .stat span{color:var(--muted);font-size:13px}
-@media (max-width:700px){.review{grid-template-columns:1fr;gap:22px}.review .stats{justify-content:flex-start}}
-
-/* ---- TROVACI QUI ---- */
-.find h2{font-size:clamp(30px,5.2vw,56px);margin:6px 0 26px}
-.find-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start}
-.hours{border:1px solid var(--line);border-radius:16px;overflow:hidden}
-.hours .row{display:flex;justify-content:space-between;gap:14px;padding:15px 18px;border-bottom:1px solid var(--line);font-size:15px}
-.hours .row:last-child{border-bottom:none}
-.hours .row span:first-child{color:var(--muted)}
-.hours .row.addr{background:var(--card);font-weight:600}
-.hours .row.addr a{color:var(--red);text-decoration:none}
-.map{border:1px solid var(--line);border-radius:16px;overflow:hidden;min-height:300px;background:#14100e}
-.map iframe{width:100%;height:100%;min-height:300px;border:0;display:block;filter:grayscale(.3) contrast(1.05)}
-@media (max-width:760px){.find-grid{grid-template-columns:1fr}}
 
 /* ---- PRENOTAZIONE ---- */
 .book-sec{background:linear-gradient(180deg,#100c0a,#0a0908)}
@@ -336,7 +317,7 @@ src="https://www.facebook.com/tr?id=1752658912398511&ev=PageView&noscript=1"
       <span class="kicker">Prenota</span>
       <h2 class="display">Il tuo tavolo di Ferragosto</h2>
       <span class="badge"><span class="dot"></span>Pochi tavoli rimasti</span>
-      <p class="quando">Sabato 15 agosto, a cena. Per l'orario ti chiamiamo noi.</p>
+      <p class="quando">Sabato 15 agosto, a pranzo. Per l'orario ti chiamiamo noi.</p>
     </div>
 
     <div class="book" id="book" aria-label="Prenota il tavolo">
@@ -378,7 +359,7 @@ src="https://www.facebook.com/tr?id=1752658912398511&ev=PageView&noscript=1"
 <section class="section exp">
   <div class="wrap">
     <span class="kicker">L'esperienza</span>
-    <h2 class="display">Non è una cena.<br><span class="l2">È un rito.</span></h2>
+    <h2 class="display">Non è un pranzo.<br><span class="l2">È un rito.</span></h2>
     <p class="intro">Da noi la carne si sceglie <b>al banco</b>: ci passi davanti e indichi il taglio che vuoi. Da lì va dritto sulla <b>brace a fuoco vivo</b> e arriva al tavolo quando è pronto, non un minuto prima.</p>
 
     <div class="banco">
@@ -393,7 +374,7 @@ src="https://www.facebook.com/tr?id=1752658912398511&ev=PageView&noscript=1"
 
     <div class="cucina">
       <h3 class="display">La nostra Cucina</h3>
-      <p class="intro">Un viaggio di sapori che ti accompagna per tutta la sera.</p>
+      <p class="intro">Un viaggio di sapori che ti accompagna dall'antipasto al dolce.</p>
       <div class="galleria">
         <div class="tile"><img src="cucina-tartare-fichi.jpg" alt="Tartare di manzo con fichi e stracciatella" loading="lazy"></div>
         <div class="tile"><img src="cucina-tartare-zucchine.jpg" alt="Tartare di manzo con zucchine e salsa" loading="lazy"></div>
@@ -407,41 +388,9 @@ src="https://www.facebook.com/tr?id=1752658912398511&ev=PageView&noscript=1"
   </div>
 </section>
 
-<!-- RECENSIONE -->
-<section class="section">
-  <div class="wrap">
-    <div class="review">
-      <div>
-        <div class="stars">★★★★★</div>
-        <p class="quote">"La carne migliore che ho mangiato in città. Cottura perfetta, servizio veloce."</p>
-        <div class="who">— Marco T., Google Reviews</div>
-      </div>
-      <div class="stats">
-        <div class="stat"><b>4.9</b><span>rating medio</span></div>
-        <div class="stat"><b>500+</b><span>recensioni</span></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- TROVACI QUI -->
-<section class="section find">
-  <div class="wrap">
-    <span class="kicker">Dove e quando</span>
-    <h2 class="display">Trovaci qui</h2>
-    <div class="find-grid">
-      <div class="hours">
-        <div class="row"><span>Lunedì – Domenica</span><span>19:30–00:00</span></div>
-        <div class="row addr"><span>Indirizzo</span><a href="https://www.google.com/maps/search/?api=1&query=Largo+II+Giugno+2+Pianezza+TO" target="_blank" rel="noopener">Largo II Giugno 2, Pianezza (TO)</a></div>
-      </div>
-      <div class="map">
-        <iframe src="https://www.google.com/maps?q=Largo%20II%20Giugno%202%20Pianezza%20TO&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Mappa I Love Meat Pianezza"></iframe>
-      </div>
-    </div>
-  </div>
-</section>
-
 <!-- FOOTER -->
+<!-- Indirizzo e telefono stanno solo qui: la sezione "Trovaci qui" con mappa e
+     orari è stata tolta, la pagina finisce sulla galleria della cucina. -->
 <footer class="wrap foot">
   <div class="logo">I Love Meat</div>
   <div>
@@ -507,7 +456,7 @@ window.LP_CONFIG = (function () {
       '<h3>Tavolo prenotato, '+nome.split(" ")[0]+'!</h3>'+
       '<p>Ti aspettiamo da I Love Meat per la Grigliata Mista di Ferragosto. Ti chiamiamo noi per confermare l\'orario.</p>'+
       '<div class="det">'+
-        '<div><span>Quando:</span> sabato 15 agosto, a cena</div>'+
+        '<div><span>Quando:</span> sabato 15 agosto, a pranzo</div>'+
         '<div><span>Persone:</span> '+people+'</div>'+
         '<div><span>A nome di:</span> '+nome+'</div>'+
         '<div><span>Telefono:</span> '+tel+'</div>'+
