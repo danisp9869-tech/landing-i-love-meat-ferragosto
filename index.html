@@ -208,6 +208,8 @@ a{color:inherit}
 .book-head{text-align:center;margin-bottom:26px}
 .book-head h2{font-size:clamp(30px,5.4vw,58px);margin-top:6px}
 .book-head .badge{margin-top:14px}
+/* Data e orario non sono più campi del form: restano scritti qui sopra */
+.book-head .quando{margin-top:12px;color:var(--muted);font-size:15px}
 /* card bianca: dentro serve tutta la scala di colori invertita rispetto al resto */
 .book{--ink:#1c1512;--ink-soft:#6d635b;--field:#f4f0ec;--bordo:#ddd4cb;
   max-width:520px;margin:0 auto;background:#fff;border:1px solid #e6ded6;border-radius:20px;padding:22px;
@@ -220,8 +222,6 @@ a{color:inherit}
 /* font-size 16px obbligatorio: sotto, iOS zooma la pagina al focus */
 .field input,.field select{width:100%;max-width:100%;min-width:0;padding:11px 12px;background:var(--field);border:1px solid var(--bordo);border-radius:10px;color:var(--ink);font-size:16px;font-family:inherit}
 .field input::placeholder{color:#a99f96}
-.field input[type="date"]{-webkit-appearance:none;appearance:none;display:block}
-.field input[type="date"]::-webkit-date-and-time-value{text-align:left}
 .field input:focus,.field select:focus{outline:none;border-color:var(--red);background:#fff}
 .field option:disabled{color:#a99f96}
 .privacy{display:flex;align-items:flex-start;gap:10px;margin:2px 0 14px;color:var(--ink-soft);font-size:12.5px;line-height:1.4;cursor:pointer}
@@ -332,34 +332,23 @@ src="https://www.facebook.com/tr?id=1752658912398511&ev=PageView&noscript=1"
       <span class="kicker">Prenota</span>
       <h2 class="display">Il tuo tavolo di Ferragosto</h2>
       <span class="badge"><span class="dot"></span>Pochi tavoli rimasti</span>
+      <p class="quando">Sabato 15 agosto, a cena. Per l'orario ti chiamiamo noi.</p>
     </div>
 
     <div class="book" id="book" aria-label="Prenota il tavolo">
       <div class="field">
-        <label for="data">1 · Data <span class="opt">(sabato 15 agosto)</span></label>
-        <input type="date" id="data" required>
-      </div>
-      <div class="field">
-        <label for="persone">2 · Quante persone</label>
+        <label for="persone">1 · Quante persone</label>
         <select id="persone" required></select>
-      </div>
-      <div class="field">
-        <label for="orario">3 · Orario</label>
-        <select id="orario" required></select>
       </div>
       <div class="grid2">
         <div class="field">
-          <label for="nome">4 · Il tuo nome</label>
+          <label for="nome">2 · Il tuo nome</label>
           <input type="text" id="nome" autocomplete="name" placeholder="Nome e cognome" required>
         </div>
         <div class="field">
-          <label for="telefono">Telefono</label>
+          <label for="telefono">3 · Telefono</label>
           <input type="tel" id="telefono" autocomplete="tel" placeholder="Es. 345 688 1360" required>
         </div>
-      </div>
-      <div class="field">
-        <label for="email">Email</label>
-        <input type="email" id="email" autocomplete="email" placeholder="La tua email">
       </div>
       <div class="field">
         <label for="richieste">Richieste particolari <span class="opt">(facoltativo)</span></label>
@@ -464,142 +453,54 @@ src="https://www.facebook.com/tr?id=1752658912398511&ev=PageView&noscript=1"
 
 /* ====== CONFIG: cambia SOLO questo blocco ====== */
 window.LP_CONFIG = (function () {
-  var booked = {}; // nessuna prenotazione simulata: tutti gli orari disponibili
   return {
-    capacity: 60,        // coperti totali della serata
-    gap: 0,              // margine oltre la capienza (0 = mai overbooking)
     phone: "+393456881360",
     // URL dell'app Google Apps Script che scrive nel foglio (link "/exec")
     sheetUrl: "https://script.google.com/macros/s/AKfycbyCVTPWs0z8ZCcdUy3e2j_WC8bWwWa2U4u-LCbhEfsFxL3ErGv2zX8V0OzVZi_Rl6j0Zg/exec",
-    // Offerta di un giorno solo: il campo data è bloccato su Ferragosto, non si
-    // può prenotare per altre sere. Per aprire più giorni, svuotare fixedDate.
+    // Serata unica: data e orario non si scelgono nel form. La data parte
+    // comunque verso il foglio, sennò la colonna resterebbe vuota.
     fixedDate: "2026-08-15",
-    // Ad agosto il ristorante è aperto solo a cena: la lista del pranzo è vuota
-    // di proposito. Per riaprirlo basta rimettere qui gli orari.
-    lunch: [],
-    dinner: ["19:30","20:00","20:30","21:00","21:30","22:00","22:30","23:00","23:30"],
     offerName: "Grigliata Mista di Ferragosto",
     // Finisce nella colonna "Offerta" del foglio, condiviso con le altre landing.
     // Tenerla corta e sempre uguale: serve a filtrare, non a essere letta.
-    offerTag: "Ferragosto",
-    booked: booked
+    offerTag: "Ferragosto"
   };
 })();
 
-/* ====== LOGICA PRENOTAZIONE (invariata: collegata al Google Sheet) ====== */
+/* ====== LOGICA PRENOTAZIONE (collegata al Google Sheet) ======
+   Serata unica: niente scelta di data e orario, quindi niente slot, niente
+   capienza, niente calendario. Restano persone, nome, telefono e richieste. */
 (function () {
   var C = window.LP_CONFIG || {};
-  var CAPACITY = C.capacity != null ? C.capacity : 80;
-  var GAP = C.gap != null ? C.gap : 0;
   var PHONE = C.phone || "+393456881360";
   var SHEET_URL = (C.sheetUrl && C.sheetUrl.indexOf("http")===0) ? C.sheetUrl : "";
-  var OFFER = C.offerName || "Grigliata Mista di Ferragosto";
   var OFFER_TAG = C.offerTag || "Ferragosto";
-  var FIXED_DATE = C.fixedDate || "";   // giorno unico dell'offerta ("" = tutte le sere)
-  var LUNCH = C.lunch || [];   // vuoto: ad agosto si prenota solo la cena
-  var DINNER = C.dinner || ["19:30","20:00","20:30","21:00","21:30","22:00","22:30","23:00","23:30"];
-  var BOOKED = C.booked || {};
-  var ALL_SLOTS = LUNCH.concat(DINNER);
+  var FIXED_DATE = C.fixedDate || "";   // data spedita al foglio, non chiesta all'utente
   var $ = function (id) { return document.getElementById(id); };
-  var dateEl=$("data"),peopleEl=$("persone"),slotInput=$("orario"),
-      nameEl=$("nome"),phoneEl=$("telefono"),emailEl=$("email"),richiesteEl=$("richieste"),
+  var peopleEl=$("persone"),nameEl=$("nome"),phoneEl=$("telefono"),richiesteEl=$("richieste"),
       privacyEl=$("privacy"),ctaEl=$("cta"),errEl=$("err"),bookEl=$("book");
-
-  var today=new Date(); today.setHours(0,0,0,0);
-  // Data locale in formato YYYY-MM-DD: toISOString() userebbe UTC e in Italia
-  // (UTC+1/+2) tornerebbe il giorno prima, precompilando una data già passata.
-  var iso=function(d){var m=d.getMonth()+1,g=d.getDate();return d.getFullYear()+"-"+(m<10?"0":"")+m+"-"+(g<10?"0":"")+g;};
-  if(FIXED_DATE){
-    // Un giorno solo: il calendario è già compilato e non si può spostare.
-    dateEl.min=dateEl.max=dateEl.value=FIXED_DATE;
-  } else {
-    dateEl.min=iso(today); if(!dateEl.value) dateEl.value=iso(today);
-  }
 
   for(var n=1;n<=20;n++){var o=document.createElement("option");o.value=n;o.textContent=n+(n===1?" persona":" persone");peopleEl.appendChild(o);}
   peopleEl.value="2";
 
-  // All'apertura porta la data sul primo giorno prenotabile (se oggi è finito, domani).
-  // Con la data bloccata non c'è niente da scegliere: si resta su Ferragosto.
-  if(!FIXED_DATE) dateEl.value=firstBookableDate(dateEl.value,parseInt(peopleEl.value,10));
-
-  function bookedFor(date,slot){return (BOOKED[date]&&BOOKED[date][slot])?BOOKED[date][slot]:0;}
-
-  // Perché un orario non è prenotabile: "" = libero, altrimenti il motivo mostrato sul tasto
-  function slotState(date,slot,people){
-    // La regola "sabato pranzo chiuso" non serve più: con LUNCH vuoto restano
-    // solo orari di cena, aperti tutti i giorni. Torna utile se si riapre a pranzo.
-    if(LUNCH.length && new Date(+date.split("-")[0],+date.split("-")[1]-1,+date.split("-")[2]).getDay()===6
-       && LUNCH.indexOf(slot)>=0) return "chiuso";
-    var now=new Date();
-    if(date===iso(now)){                                                   // orario già trascorso
-      var hm=slot.split(":");
-      if((+hm[0]*60 + +hm[1])<=(now.getHours()*60+now.getMinutes())) return "passato";
-    }
-    if((bookedFor(date,slot)+people)>(CAPACITY+GAP)) return "esaurito";
-    return "";
-  }
-
-  function hasFreeSlot(date,people){
-    for(var i=0;i<ALL_SLOTS.length;i++){ if(!slotState(date,ALL_SLOTS[i],people)) return true; }
-    return false;
-  }
-
-  // Primo giorno con almeno un orario libero: a fine serata evita di aprire il
-  // form su un oggi tutto esaurito, proponendo direttamente il giorno dopo.
-  function firstBookableDate(date,people){
-    var p=date.split("-"), d=new Date(+p[0],+p[1]-1,+p[2]);
-    for(var i=0;i<14;i++){
-      var s=iso(d);
-      if(hasFreeSlot(s,people)) return s;
-      d.setDate(d.getDate()+1);
-    }
-    return date;
-  }
-
-  // Gli orari stanno in un menu a tendina: quelli non prenotabili restano
-  // visibili ma disabilitati, col motivo accanto.
-  function renderSlots(){
-    var date=dateEl.value, people=parseInt(peopleEl.value,10)||0;
-    slotInput.innerHTML="";
-    if(!date||!people){ validate(); return; }
-
-    var vuota=document.createElement("option");
-    vuota.value=""; vuota.textContent="Scegli un orario";
-    slotInput.appendChild(vuota);
-
-    ALL_SLOTS.forEach(function(slot){
-      var state=slotState(date,slot,people);
-      var o=document.createElement("option");
-      o.value=state?"":slot;
-      o.textContent=state?(slot+" — "+state):slot;
-      o.disabled=!!state;
-      slotInput.appendChild(o);
-    });
-    slotInput.value="";
-    validate();
-  }
-
   function validate(){
-    var ok=dateEl.value&&peopleEl.value&&slotInput.value&&nameEl.value.trim().length>=2&&phoneEl.value.trim().length>=6&&privacyEl.checked;
+    var ok=peopleEl.value&&nameEl.value.trim().length>=2&&phoneEl.value.trim().length>=6&&privacyEl.checked;
     if(ctaEl) ctaEl.disabled=!ok; return ok;
   }
-  function fmtDate(s){var p=s.split("-");return p[2]+"/"+p[1]+"/"+p[0];}
 
   function fbTrack(ev){ try{ if(typeof fbq==="function") fbq("track",ev); }catch(e){} }
   var checkoutStarted=false;
   function startCheckout(){ if(checkoutStarted) return; checkoutStarted=true; fbTrack("InitiateCheckout"); } // inizio prenotazione
 
-  function showSuccess(date,people,slot,nome,tel){
+  function showSuccess(people,nome,tel){
     fbTrack("Lead"); // conversione: prenotazione completata
     bookEl.innerHTML=
       '<div class="success"><div class="ok">✓</div>'+
       '<h3>Tavolo prenotato, '+nome.split(" ")[0]+'!</h3>'+
-      '<p>Ti aspettiamo da I Love Meat per la Grigliata Mista di Ferragosto. Se serve ti chiamiamo per confermare.</p>'+
+      '<p>Ti aspettiamo da I Love Meat per la Grigliata Mista di Ferragosto. Ti chiamiamo noi per confermare l\'orario.</p>'+
       '<div class="det">'+
-        '<div><span>Data:</span> '+fmtDate(date)+'</div>'+
+        '<div><span>Quando:</span> sabato 15 agosto, a cena</div>'+
         '<div><span>Persone:</span> '+people+'</div>'+
-        '<div><span>Orario:</span> '+slot+'</div>'+
         '<div><span>A nome di:</span> '+nome+'</div>'+
         '<div><span>Telefono:</span> '+tel+'</div>'+
       '</div>'+
@@ -610,21 +511,23 @@ window.LP_CONFIG = (function () {
   function submit(){
     if(!validate()){errEl.textContent="Compila i campi obbligatori e accetta la privacy.";return;}
     errEl.textContent="";
-    var date=dateEl.value,people=peopleEl.value,slot=slotInput.value,nome=nameEl.value.trim(),tel=phoneEl.value.trim(),
-        email=emailEl.value.trim(),richieste=richiesteEl.value.trim();
+    var people=peopleEl.value,nome=nameEl.value.trim(),tel=phoneEl.value.trim(),
+        richieste=richiesteEl.value.trim();
 
     // Se non è ancora configurato il foglio, mostra comunque la conferma
-    if(!SHEET_URL){ showSuccess(date,people,slot,nome,tel); return; }
+    if(!SHEET_URL){ showSuccess(people,nome,tel); return; }
 
-    // Invia la prenotazione al Google Sheet (Apps Script)
+    // Invia la prenotazione al Google Sheet (Apps Script). Le colonne del foglio
+    // sono le stesse delle altre landing: "ora" ed "email" partono vuote perché
+    // qui non si chiedono, "data" è fissa sul giorno di Ferragosto.
     ctaEl.disabled=true; ctaEl.textContent="Invio in corso…";
     var body=new URLSearchParams({
-      data:date, ora:slot, persone:people, nome:nome, telefono:tel,
-      email:email, richieste:richieste, privacy:(privacyEl.checked?"Sì":"No"),
+      data:FIXED_DATE, ora:"", persone:people, nome:nome, telefono:tel,
+      email:"", richieste:richieste, privacy:(privacyEl.checked?"Sì":"No"),
       offerta:OFFER_TAG
     });
     fetch(SHEET_URL,{method:"POST",mode:"no-cors",body:body})
-      .then(function(){ showSuccess(date,people,slot,nome,tel); })
+      .then(function(){ showSuccess(people,nome,tel); })
       .catch(function(){
         // Rete non disponibile: invita a chiamare, senza perdere la prenotazione
         ctaEl.disabled=false; ctaEl.textContent="Conferma prenotazione";
@@ -632,22 +535,15 @@ window.LP_CONFIG = (function () {
       });
   }
 
-  // Apre il calendario toccando tutto il campo data (non solo l'iconcina).
-  // Con la data bloccata non si apre: ci sarebbe un solo giorno selezionabile.
-  function openDatePicker(){ if(FIXED_DATE) return; try{ if(typeof dateEl.showPicker==="function") dateEl.showPicker(); }catch(e){} }
-  dateEl.addEventListener("click",openDatePicker);
-  dateEl.addEventListener("focus",openDatePicker);
-
-  dateEl.addEventListener("change",function(){startCheckout();renderSlots();});
-  peopleEl.addEventListener("change",function(){startCheckout();renderSlots();});
-  slotInput.addEventListener("change",function(){startCheckout();validate();});
+  peopleEl.addEventListener("change",function(){startCheckout();validate();});
   nameEl.addEventListener("input",function(){startCheckout();validate();});
   phoneEl.addEventListener("input",function(){startCheckout();validate();});
+  richiesteEl.addEventListener("input",startCheckout);
   privacyEl.addEventListener("change",validate);
   ctaEl.addEventListener("click",submit);
   var cl=$("call-link"); if(cl) cl.href="tel:"+PHONE;
 
-  renderSlots();
+  validate();
 })();
 </script>
 </body>
