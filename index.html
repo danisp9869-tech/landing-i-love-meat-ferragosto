@@ -351,6 +351,10 @@ src="https://www.facebook.com/tr?id=1752658912398511&ev=PageView&noscript=1"
         </div>
       </div>
       <div class="field">
+        <label for="email">Email</label>
+        <input type="email" id="email" autocomplete="email" placeholder="La tua email">
+      </div>
+      <div class="field">
         <label for="richieste">Richieste particolari <span class="opt">(facoltativo)</span></label>
         <input type="text" id="richieste" placeholder="Allergie, seggiolone, tavolo esterno…">
       </div>
@@ -477,8 +481,8 @@ window.LP_CONFIG = (function () {
   var OFFER_TAG = C.offerTag || "Ferragosto";
   var FIXED_DATE = C.fixedDate || "";   // data spedita al foglio, non chiesta all'utente
   var $ = function (id) { return document.getElementById(id); };
-  var peopleEl=$("persone"),nameEl=$("nome"),phoneEl=$("telefono"),richiesteEl=$("richieste"),
-      privacyEl=$("privacy"),ctaEl=$("cta"),errEl=$("err"),bookEl=$("book");
+  var peopleEl=$("persone"),nameEl=$("nome"),phoneEl=$("telefono"),emailEl=$("email"),
+      richiesteEl=$("richieste"),privacyEl=$("privacy"),ctaEl=$("cta"),errEl=$("err"),bookEl=$("book");
 
   for(var n=1;n<=20;n++){var o=document.createElement("option");o.value=n;o.textContent=n+(n===1?" persona":" persone");peopleEl.appendChild(o);}
   peopleEl.value="2";
@@ -512,18 +516,18 @@ window.LP_CONFIG = (function () {
     if(!validate()){errEl.textContent="Compila i campi obbligatori e accetta la privacy.";return;}
     errEl.textContent="";
     var people=peopleEl.value,nome=nameEl.value.trim(),tel=phoneEl.value.trim(),
-        richieste=richiesteEl.value.trim();
+        email=emailEl.value.trim(),richieste=richiesteEl.value.trim();
 
     // Se non è ancora configurato il foglio, mostra comunque la conferma
     if(!SHEET_URL){ showSuccess(people,nome,tel); return; }
 
     // Invia la prenotazione al Google Sheet (Apps Script). Le colonne del foglio
-    // sono le stesse delle altre landing: "ora" ed "email" partono vuote perché
-    // qui non si chiedono, "data" è fissa sul giorno di Ferragosto.
+    // sono le stesse delle altre landing: "ora" parte vuota perché qui non si
+    // chiede, "data" è fissa sul giorno di Ferragosto.
     ctaEl.disabled=true; ctaEl.textContent="Invio in corso…";
     var body=new URLSearchParams({
       data:FIXED_DATE, ora:"", persone:people, nome:nome, telefono:tel,
-      email:"", richieste:richieste, privacy:(privacyEl.checked?"Sì":"No"),
+      email:email, richieste:richieste, privacy:(privacyEl.checked?"Sì":"No"),
       offerta:OFFER_TAG
     });
     fetch(SHEET_URL,{method:"POST",mode:"no-cors",body:body})
@@ -538,6 +542,7 @@ window.LP_CONFIG = (function () {
   peopleEl.addEventListener("change",function(){startCheckout();validate();});
   nameEl.addEventListener("input",function(){startCheckout();validate();});
   phoneEl.addEventListener("input",function(){startCheckout();validate();});
+  emailEl.addEventListener("input",startCheckout);
   richiesteEl.addEventListener("input",startCheckout);
   privacyEl.addEventListener("change",validate);
   ctaEl.addEventListener("click",submit);
