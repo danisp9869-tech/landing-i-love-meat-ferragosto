@@ -149,44 +149,6 @@ a{color:inherit}
   .offer .btn{width:100%;max-width:360px}
 }
 
-/* ---- ESPERIENZA / GALLERY ---- */
-.exp h2{font-size:clamp(30px,5.2vw,56px);margin:6px 0 16px}
-.exp h2 .l2{color:var(--red)}
-.exp .intro{color:var(--muted);font-size:17px;max-width:58ch;margin:0 0 28px}
-.exp .intro b{color:var(--text);font-weight:600}
-.tile figcaption{position:absolute;left:0;right:0;bottom:0;z-index:2;padding:38px 16px 15px;font-family:"Anton","Arial Narrow",sans-serif;text-transform:uppercase;letter-spacing:.03em;font-size:18px;line-height:1.1;background:linear-gradient(180deg,transparent,rgba(10,9,8,.6) 38%,rgba(10,9,8,.95))}
-.tile figcaption{text-shadow:0 2px 12px rgba(0,0,0,.85)}
-/* banco: foto principale grande a sinistra, seconda in colonna stretta */
-.banco{display:grid;grid-template-columns:1.7fr 1fr;gap:14px;height:440px}
-.cucina{margin-top:52px}
-.cucina h3{font-size:clamp(26px,4.4vw,44px);margin-bottom:12px}
-/* galleria a incastro: due blocchi speculari, grande a sinistra poi grande a destra */
-.galleria{display:grid;grid-template-columns:repeat(6,1fr);grid-auto-rows:172px;gap:14px}
-.galleria .tile:nth-child(1){grid-column:1 / 5;grid-row:1 / 3}
-.galleria .tile:nth-child(2){grid-column:5 / 7;grid-row:1}
-.galleria .tile:nth-child(3){grid-column:5 / 7;grid-row:2}
-.galleria .tile:nth-child(4){grid-column:1 / 3;grid-row:3}
-.galleria .tile:nth-child(5){grid-column:1 / 3;grid-row:4}
-.galleria .tile:nth-child(6){grid-column:3 / 7;grid-row:3 / 5}
-.cucina .cta-row{text-align:center;margin-top:30px}
-.gallery{display:grid;grid-template-columns:1.4fr 1fr;grid-template-rows:1fr 1fr;gap:14px;height:520px}
-.tile{position:relative;border-radius:var(--radius);overflow:hidden;border:1px solid var(--line);background:#14100e}
-.tile:nth-child(1){grid-row:1 / span 2}
-.tile img{width:100%;height:100%;object-fit:cover}
-.tile .ph{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;color:#5f574f;font-size:12.5px;text-align:center;padding:12px}
-.tile .ph svg{width:34px;height:34px;opacity:.5}
-@media (max-width:760px){
-  .gallery{grid-template-columns:1fr 1fr;grid-template-rows:260px 190px;height:auto}
-  .tile:nth-child(1){grid-row:1;grid-column:1 / span 2}
-  .banco{grid-template-columns:1fr;grid-template-rows:250px 180px;height:auto}
-  .banco .tile{grid-column:1}
-  .cucina .cta-row .btn{width:100%;max-width:360px}
-  /* mobile: due larghe a tutta riga che incorniciano quattro tessere piccole */
-  .galleria{grid-template-columns:1fr 1fr;grid-auto-rows:132px}
-  .galleria .tile:nth-child(n){grid-column:auto;grid-row:auto}
-  .galleria .tile:nth-child(1),.galleria .tile:nth-child(6){grid-column:1 / 3;grid-row:span 2}
-}
-
 /* ---- PRENOTAZIONE ---- */
 .book-sec{background:linear-gradient(180deg,#100c0a,#0a0908)}
 .book-head{text-align:center;margin-bottom:26px}
@@ -317,7 +279,7 @@ src="https://www.facebook.com/tr?id=1752658912398511&ev=PageView&noscript=1"
       <span class="kicker">Prenota</span>
       <h2 class="display">Il tuo tavolo di Ferragosto</h2>
       <span class="badge"><span class="dot"></span>Pochi tavoli rimasti</span>
-      <p class="quando">Sabato 15 agosto, a pranzo. Per l'orario ti chiamiamo noi.</p>
+      <p class="quando">Sabato 15 agosto, a pranzo.</p>
     </div>
 
     <div class="book" id="book" aria-label="Prenota il tavolo">
@@ -354,43 +316,9 @@ src="https://www.facebook.com/tr?id=1752658912398511&ev=PageView&noscript=1"
   </div>
 </section>
 
-
-<!-- ESPERIENZA -->
-<section class="section exp">
-  <div class="wrap">
-    <span class="kicker">L'esperienza</span>
-    <h2 class="display">Non è un pranzo.<br><span class="l2">È un rito.</span></h2>
-    <p class="intro">Da noi la carne si sceglie <b>al banco</b>: ci passi davanti e indichi il taglio che vuoi. Da lì va dritto sulla <b>brace a fuoco vivo</b> e arriva al tavolo quando è pronto, non un minuto prima.</p>
-
-    <div class="banco">
-      <figure class="tile">
-        <img src="banco-tagli.jpg" alt="Il banco di I Love Meat con costate, tomahawk, arrosti e spiedini" loading="lazy">
-        <figcaption>Scegli al banco</figcaption>
-      </figure>
-      <figure class="tile">
-        <img src="esperienza-banco.jpg" alt="Vassoi di spiedini, involtini e salsiccia al banco di I Love Meat" loading="lazy">
-      </figure>
-    </div>
-
-    <div class="cucina">
-      <h3 class="display">La nostra Cucina</h3>
-      <p class="intro">Un viaggio di sapori che ti accompagna dall'antipasto al dolce.</p>
-      <div class="galleria">
-        <div class="tile"><img src="cucina-tartare-fichi.jpg" alt="Tartare di manzo con fichi e stracciatella" loading="lazy"></div>
-        <div class="tile"><img src="cucina-tartare-zucchine.jpg" alt="Tartare di manzo con zucchine e salsa" loading="lazy"></div>
-        <div class="tile"><img src="cucina-vitello-tonnato.jpg" alt="Vitello tonnato" loading="lazy"></div>
-        <div class="tile"><img src="cucina-carne-verdure.jpg" alt="Piatto di carne con peperoni, cavolfiore e rucola" loading="lazy"></div>
-        <div class="tile"><img src="cucina-agnolotti.jpg" alt="Agnolotti al sugo d'arrosto" loading="lazy"></div>
-        <div class="tile"><img src="cucina-orecchiette.jpg" alt="Orecchiette al pomodoro con briciole croccanti" loading="lazy"></div>
-      </div>
-      <div class="cta-row"><a class="btn" href="#book">Prenota un tavolo</a></div>
-    </div>
-  </div>
-</section>
-
 <!-- FOOTER -->
-<!-- Indirizzo e telefono stanno solo qui: la sezione "Trovaci qui" con mappa e
-     orari è stata tolta, la pagina finisce sulla galleria della cucina. -->
+<!-- Unico posto con indirizzo e telefono: la pagina è solo hero + offerta +
+     prenotazione, le sezioni di racconto del ristorante sono state tolte. -->
 <footer class="wrap foot">
   <div class="logo">I Love Meat</div>
   <div>
@@ -454,7 +382,7 @@ window.LP_CONFIG = (function () {
     bookEl.innerHTML=
       '<div class="success"><div class="ok">✓</div>'+
       '<h3>Tavolo prenotato, '+nome.split(" ")[0]+'!</h3>'+
-      '<p>Ti aspettiamo da I Love Meat per la Grigliata Mista di Ferragosto. Ti chiamiamo noi per confermare l\'orario.</p>'+
+      '<p>Ti aspettiamo da I Love Meat per la Grigliata Mista di Ferragosto. Se serve ti chiamiamo per confermare.</p>'+
       '<div class="det">'+
         '<div><span>Quando:</span> sabato 15 agosto, a pranzo</div>'+
         '<div><span>Persone:</span> '+people+'</div>'+
