@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ferragosto in Griglieria — Grigliata Mista 20€ | I Love Meat Pianezza</title>
+<meta name="description" content="Ferragosto a Pianezza: grigliata mista di carne a 20€. Quest'anno non cucini tu — alla brace ci pensiamo noi, tu pensa solo a mangiare e a bere. Prenota il tavolo da I Love Meat.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<style>
+/* I Love Meat — landing "Per veri carnivori". Nero + rosso, display Anton. */
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0a0908;--bg2:#141010;--card:#1a1512;--card2:#211a16;--line:#2c2420;
+  --text:#f2ede6;--muted:#9a9088;
+  --red:#d10a1c;--red-2:#f01f30;--red-d:#8f0713;
+  --gold:#ffc233;
+  --radius:16px
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:"Inter",-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;line-height:1.55;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{max-width:100%;display:block}
+a{color:inherit}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+.display{font-family:"Anton","Arial Narrow",sans-serif;font-weight:400;text-transform:uppercase;letter-spacing:.01em;line-height:.94}
+.kicker{color:var(--red);font-size:13px;font-weight:800;letter-spacing:.18em;text-transform:uppercase}
+.accent{color:var(--red)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:17px 32px;border:none;border-radius:999px;background:var(--red);color:#fff;font-family:"Anton","Arial Narrow",sans-serif;font-size:22px;font-weight:400;text-transform:uppercase;letter-spacing:.04em;cursor:pointer;text-decoration:none;transition:.15s;box-shadow:0 10px 30px rgba(209,10,28,.35)}
+.btn:hover{background:var(--red-2);transform:translateY(-1px)}
+.btn-ghost{background:transparent;border:1px solid var(--line);box-shadow:none;color:var(--text);font-weight:700}
+.btn-ghost:hover{background:rgba(255,255,255,.04);border-color:var(--red);transform:none}
+.badge{display:inline-flex;align-items:center;gap:8px;padding:7px 15px;border:1px solid rgba(209,10,28,.5);border-radius:999px;color:var(--red);font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;background:rgba(209,10,28,.08)}
+.badge .dot{width:7px;height:7px;border-radius:50%;background:var(--red);box-shadow:0 0 0 0 rgba(209,10,28,.6);animation:pulse 1.8s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(209,10,28,.5)}70%{box-shadow:0 0 0 7px rgba(209,10,28,0)}100%{box-shadow:0 0 0 0 rgba(209,10,28,0)}}
+.stars{color:var(--red);letter-spacing:2px;font-size:14px}
+
+/* ---- NAV ---- */
+/* fissa e trasparente: la foto dell'hero passa sotto e arriva fino in cima.
+   La barra scura ricompare solo quando si scorre, per non perdere leggibilità. */
+.nav{position:fixed;top:0;left:0;right:0;z-index:80;display:flex;align-items:center;justify-content:space-between;padding:16px 22px;background:transparent;border-bottom:1px solid transparent;transition:background .25s,border-color .25s}
+.nav.scrolled{background:rgba(10,9,8,.82);backdrop-filter:blur(10px);border-bottom-color:var(--line)}
+.nav .logo{font-family:"Anton",sans-serif;text-transform:uppercase;font-size:20px;letter-spacing:.02em;line-height:1}
+.nav .logo small{display:block;color:var(--red);font-family:"Inter",sans-serif;font-size:9.5px;font-weight:800;letter-spacing:.22em;margin-top:3px}
+.nav .btn{padding:11px 22px;font-size:18px}
+@media (max-width:600px){.nav .btn{padding:10px 18px;font-size:16px}}
+
+/* ---- HERO (testo sopra immagine scurita) ---- */
+.hero{position:relative;overflow:hidden;min-height:74vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:98px 0 60px}
+/* costata in 3:2 con la brace sfocata a sinistra: sposto l'inquadratura verso
+   destra così su schermi larghi resta al centro la carne, non il fuoco */
+.hero-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:58% 50%;filter:brightness(.58) saturate(1.08) contrast(1.03);z-index:0}
+/* velo scuro: la foto si deve vedere, ma il copy le sta sopra e vince lui.
+   Pieno in fondo, dove serve anche a fondersi con la sezione sotto */
+.hero::before{content:"";position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(10,9,8,.55),rgba(10,9,8,.3) 45%,rgba(10,9,8,.95) 97%)}
+.hero-inner{position:relative;z-index:2;max-width:1120px}
+/* Solo la pillola dell'hero è oro: gli altri badge della pagina ("Pochi tavoli
+   rimasti") restano rossi. Il fondo scuro non lo tolgo, serve a staccare la
+   scritta dalla foto — e sull'oro funziona meglio che su un fondo giallino. */
+.hero .badge{margin-bottom:18px;background:rgba(10,9,8,.55);backdrop-filter:blur(4px);color:var(--gold);border-color:rgba(255,194,51,.55)}
+.hero .badge .dot{background:var(--gold);box-shadow:0 0 0 0 rgba(255,194,51,.6);animation-name:pulse-gold}
+@keyframes pulse-gold{0%{box-shadow:0 0 0 0 rgba(255,194,51,.5)}70%{box-shadow:0 0 0 7px rgba(255,194,51,0)}100%{box-shadow:0 0 0 0 rgba(255,194,51,0)}}
+/* foto più luminosa sotto: doppia ombra (una stretta, una larga) per tenere
+   staccate le scritte senza dover riscurire l'immagine */
+.hero h1{font-size:clamp(64px,13vw,196px);text-shadow:0 2px 10px rgba(0,0,0,.85),0 4px 40px rgba(0,0,0,.75)}
+.hero h1 .l2{color:var(--red)}
+.hero .lead{color:#f4ece3;font-size:19px;max-width:42ch;margin:24px auto 32px;text-shadow:0 1px 6px rgba(0,0,0,.9),0 2px 20px rgba(0,0,0,.8)}
+.hero .cta-row{display:flex;align-items:center;justify-content:center;gap:22px;flex-wrap:wrap}
+.hero .rate{font-size:13.5px;color:#cfc6bc;text-shadow:0 1px 10px rgba(0,0,0,.8)}
+.hero .rate b{color:#fff}
+@media (max-width:600px){
+  .wrap{padding:0 20px}
+  /* su mobile la barra resta scura e nel flusso, come prima */
+  .nav{position:sticky;background:rgba(10,9,8,.82);backdrop-filter:blur(10px);border-bottom-color:var(--line)}
+  .hero{min-height:auto;padding:34px 0 44px}
+  /* su schermo stretto "cover" ritaglia troppo: accorcio la foto così inquadra
+     più larga e la sfumo in basso per non lasciare uno stacco netto. Appena più
+     scura che su desktop: qui il testo copre gran parte della foto */
+  .hero-bg{height:78%;filter:brightness(.5) saturate(1.08) contrast(1.03);object-position:center 46%;
+    -webkit-mask-image:linear-gradient(180deg,#000 68%,transparent 100%);
+    mask-image:linear-gradient(180deg,#000 68%,transparent 100%)}
+  .hero .lead{font-size:17px}
+  /* La pillola dell'hero deve restare su una riga anche a 320px: qui il testo
+     è corto ("Sabato 15 agosto"), ma tengo la stessa riduzione delle altre
+     landing così regge anche se domani ci si scrive dentro qualcosa di più. */
+  .hero .badge{font-size:10px;letter-spacing:.02em;padding:6px 11px;gap:6px}
+  .hero .cta-row{flex-direction:column;gap:18px}
+  .hero .cta-row .btn{width:100%;max-width:360px;font-size:24px;padding:19px 24px}
+  .hero .rate{text-align:center;font-size:14px}
+  .section{padding:30px 0}
+  .grid2{grid-template-columns:1fr}
+}
+
+/* Desktop: l'hero deve stare dentro la prima schermata e lasciar intravedere
+   la sezione sotto. Su mobile resta com'è. */
+@media (min-width:1000px){
+  .hero{min-height:auto;padding:92px 0 40px}
+  .hero .badge{margin-bottom:14px}
+  .hero h1{font-size:clamp(64px,8.6vw,124px)}
+  .hero .lead{font-size:18px;margin:18px auto 26px}
+}
+@media (min-width:1000px) and (max-height:820px){
+  .hero h1{font-size:clamp(56px,7.4vw,104px)}
+  .hero .lead{margin:14px auto 22px}
+}
+
+/* ---- OFFERTA ---- */
+.section{padding:36px 0}
+.offerta-titolo{color:var(--text);font-size:clamp(26px,3.6vw,40px);margin-bottom:16px}
+.offer{position:relative;display:grid;grid-template-columns:1.1fr .9fr;gap:34px;align-items:center;background:linear-gradient(160deg,#241813,#140f0d 70%);border:2px solid rgba(209,10,28,.55);border-radius:24px;padding:44px 34px;text-align:left;overflow:hidden;box-shadow:0 0 0 1px rgba(209,10,28,.12),0 24px 60px rgba(0,0,0,.5)}
+.offer-testo{position:relative;z-index:1}
+.offer h2.offer-title{font-size:clamp(44px,7.4vw,96px);line-height:.9;margin-bottom:20px}
+.offer-title .pre,.offer-title .post{display:block;font-size:.3em;line-height:1.1;color:var(--muted)}
+.offer-title .pre{margin-bottom:6px}
+.offer-title .post{margin-top:8px}
+.offer .sfida{font-size:clamp(21px,2.5vw,32px);line-height:1.04;margin:0 0 18px}
+.offer .sfida .l2{color:var(--red)}
+.offer .price s{display:inline-block;margin-right:14px;color:var(--muted);font-size:.46em;vertical-align:middle;
+  text-decoration-line:line-through;text-decoration-color:var(--red);text-decoration-thickness:.07em}
+.offer .valida{margin-top:8px;color:var(--red);font-size:12.5px;font-weight:800;letter-spacing:.12em;text-transform:uppercase}
+.offer-foto{position:relative;z-index:1;border-radius:16px;overflow:hidden;border:1px solid var(--line);min-height:380px}
+.offer-foto img{width:100%;height:100%;object-fit:cover}
+.offer::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 50% 0%,rgba(209,10,28,.18),transparent 60%);pointer-events:none}
+.offer .badge{margin-bottom:20px}
+.offer h2{font-size:clamp(30px,5.4vw,58px);margin-bottom:16px}
+.offer h2 .l2{color:var(--gold)}
+.offer p.desc{color:var(--muted);font-size:17px;max-width:46ch;margin:0 0 26px}
+.offer p.desc b{color:#fff}
+.offer .price{font-family:"Anton",sans-serif;color:var(--gold);font-size:clamp(60px,11vw,96px);line-height:.9}
+.offer .price .pre{display:inline-block;font-family:"Inter",sans-serif;color:var(--muted);font-size:17px;font-weight:600;margin-right:10px;vertical-align:middle}
+.offer .btn{margin-top:26px}
+.offer .fine{margin-top:16px;color:var(--muted);font-size:12.5px;letter-spacing:.04em;text-transform:uppercase}
+/* mobile: la card torna a colonna singola, foto sotto il testo.
+   Va dopo le regole .offer qui sopra, altrimenti verrebbe sovrascritta. */
+@media (max-width:700px){
+  .offer{grid-template-columns:1fr;gap:24px;padding:38px 20px;border-radius:20px;text-align:center}
+  .offerta-titolo{text-align:center}
+  .offer p.desc{margin:0 auto 26px}
+  .offer .price{margin-top:4px}
+  .offer-foto{min-height:230px}
+  .offer .btn{width:100%;max-width:360px}
+}
+
+/* ---- ESPERIENZA / GALLERY ---- */
+.exp h2{font-size:clamp(30px,5.2vw,56px);margin:6px 0 16px}
+.exp h2 .l2{color:var(--red)}
+.exp .intro{color:var(--muted);font-size:17px;max-width:58ch;margin:0 0 28px}
+.exp .intro b{color:var(--text);font-weight:600}
+.tile figcaption{position:absolute;left:0;right:0;bottom:0;z-index:2;padding:38px 16px 15px;font-family:"Anton","Arial Narrow",sans-serif;text-transform:uppercase;letter-spacing:.03em;font-size:18px;line-height:1.1;background:linear-gradient(180deg,transparent,rgba(10,9,8,.6) 38%,rgba(10,9,8,.95))}
+.tile figcaption{text-shadow:0 2px 12px rgba(0,0,0,.85)}
+/* banco: foto principale grande a sinistra, seconda in colonna stretta */
+.banco{display:grid;grid-template-columns:1.7fr 1fr;gap:14px;height:440px}
+.cucina{margin-top:52px}
+.cucina h3{font-size:clamp(26px,4.4vw,44px);margin-bottom:12px}
+/* galleria a incastro: due blocchi speculari, grande a sinistra poi grande a destra */
+.galleria{display:grid;grid-template-columns:repeat(6,1fr);grid-auto-rows:172px;gap:14px}
+.galleria .tile:nth-child(1){grid-column:1 / 5;grid-row:1 / 3}
+.galleria .tile:nth-child(2){grid-column:5 / 7;grid-row:1}
+.galleria .tile:nth-child(3){grid-column:5 / 7;grid-row:2}
+.galleria .tile:nth-child(4){grid-column:1 / 3;grid-row:3}
+.galleria .tile:nth-child(5){grid-column:1 / 3;grid-row:4}
+.galleria .tile:nth-child(6){grid-column:3 / 7;grid-row:3 / 5}
+.cucina .cta-row{text-align:center;margin-top:30px}
+.gallery{display:grid;grid-template-columns:1.4fr 1fr;grid-template-rows:1fr 1fr;gap:14px;height:520px}
+.tile{position:relative;border-radius:var(--radius);overflow:hidden;border:1px solid var(--line);background:#14100e}
+.tile:nth-child(1){grid-row:1 / span 2}
+.tile img{width:100%;height:100%;object-fit:cover}
+.tile .ph{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;color:#5f574f;font-size:12.5px;text-align:center;padding:12px}
+.tile .ph svg{width:34px;height:34px;opacity:.5}
+@media (max-width:760px){
+  .gallery{grid-template-columns:1fr 1fr;grid-template-rows:260px 190px;height:auto}
+  .tile:nth-child(1){grid-row:1;grid-column:1 / span 2}
+  .banco{grid-template-columns:1fr;grid-template-rows:250px 180px;height:auto}
+  .banco .tile{grid-column:1}
+  .cucina .cta-row .btn{width:100%;max-width:360px}
+  /* mobile: due larghe a tutta riga che incorniciano quattro tessere piccole */
+  .galleria{grid-template-columns:1fr 1fr;grid-auto-rows:132px}
+  .galleria .tile:nth-child(n){grid-column:auto;grid-row:auto}
+  .galleria .tile:nth-child(1),.galleria .tile:nth-child(6){grid-column:1 / 3;grid-row:span 2}
+}
+
+/* ---- RECENSIONE / STATS ---- */
+.review{display:grid;grid-template-columns:1.6fr 1fr;gap:20px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:20px;padding:30px}
+.review .quote{font-size:20px;line-height:1.5;color:var(--text);margin:12px 0}
+.review .who{color:var(--muted);font-size:14px}
+.review .stats{display:flex;gap:28px;justify-content:flex-end}
+.review .stat b{font-family:"Anton",sans-serif;color:var(--red);font-size:40px;line-height:1;display:block}
+.review .stat span{color:var(--muted);font-size:13px}
+@media (max-width:700px){.review{grid-template-columns:1fr;gap:22px}.review .stats{justify-content:flex-start}}
+
+/* ---- TROVACI QUI ---- */
+.find h2{font-size:clamp(30px,5.2vw,56px);margin:6px 0 26px}
+.find-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;align-items:start}
+.hours{border:1px solid var(--line);border-radius:16px;overflow:hidden}
+.hours .row{display:flex;justify-content:space-between;gap:14px;padding:15px 18px;border-bottom:1px solid var(--line);font-size:15px}
+.hours .row:last-child{border-bottom:none}
+.hours .row span:first-child{color:var(--muted)}
+.hours .row.addr{background:var(--card);font-weight:600}
+.hours .row.addr a{color:var(--red);text-decoration:none}
+.map{border:1px solid var(--line);border-radius:16px;overflow:hidden;min-height:300px;background:#14100e}
+.map iframe{width:100%;height:100%;min-height:300px;border:0;display:block;filter:grayscale(.3) contrast(1.05)}
+@media (max-width:760px){.find-grid{grid-template-columns:1fr}}
+
+/* ---- PRENOTAZIONE ---- */
+.book-sec{background:linear-gradient(180deg,#100c0a,#0a0908)}
+.book-head{text-align:center;margin-bottom:26px}
+.book-head h2{font-size:clamp(30px,5.4vw,58px);margin-top:6px}
+.book-head .badge{margin-top:14px}
+/* card bianca: dentro serve tutta la scala di colori invertita rispetto al resto */
+.book{--ink:#1c1512;--ink-soft:#6d635b;--field:#f4f0ec;--bordo:#ddd4cb;
+  max-width:520px;margin:0 auto;background:#fff;border:1px solid #e6ded6;border-radius:20px;padding:22px;
+  color:var(--ink);box-shadow:0 20px 50px rgba(0,0,0,.45)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media (max-width:600px){.grid2{grid-template-columns:1fr}}
+.field{margin-bottom:12px}
+.field label{display:block;font-size:12.5px;color:var(--ink-soft);margin-bottom:5px;font-weight:600}
+.field .opt{color:var(--ink-soft);font-weight:400}
+/* font-size 16px obbligatorio: sotto, iOS zooma la pagina al focus */
+.field input,.field select{width:100%;max-width:100%;min-width:0;padding:11px 12px;background:var(--field);border:1px solid var(--bordo);border-radius:10px;color:var(--ink);font-size:16px;font-family:inherit}
+.field input::placeholder{color:#a99f96}
+.field input[type="date"]{-webkit-appearance:none;appearance:none;display:block}
+.field input[type="date"]::-webkit-date-and-time-value{text-align:left}
+.field input:focus,.field select:focus{outline:none;border-color:var(--red);background:#fff}
+.field option:disabled{color:#a99f96}
+.privacy{display:flex;align-items:flex-start;gap:10px;margin:2px 0 14px;color:var(--ink-soft);font-size:12.5px;line-height:1.4;cursor:pointer}
+.privacy input{flex:0 0 auto;width:18px;height:18px;margin-top:1px;accent-color:var(--red);cursor:pointer}
+.privacy a{color:var(--red);text-decoration:underline}
+.cta{display:block;width:100%;text-align:center;padding:14px;border:none;border-radius:12px;background:var(--red);color:#fff;font-size:22px;font-weight:400;text-transform:uppercase;letter-spacing:.04em;cursor:pointer;font-family:"Anton","Arial Narrow",sans-serif;box-shadow:0 8px 22px rgba(209,10,28,.35)}
+.cta:hover{background:var(--red-2)}
+.cta:disabled{opacity:.45;cursor:not-allowed;box-shadow:none}
+.err{color:var(--red-d);font-weight:600;font-size:13px;margin-top:8px;min-height:16px}
+.quick{display:flex;gap:10px;margin:14px 0 2px}
+.quick a{flex:1;text-align:center;padding:13px;border-radius:12px;font-weight:700;font-size:15px;text-decoration:none;border:1px solid var(--line);color:var(--text)}
+.quick a:hover{border-color:var(--red)}
+
+/* ---- SUCCESS ---- */
+.success{text-align:center;padding:8px 4px}
+.success .ok{font-size:44px;line-height:1;color:var(--red)}
+.success h3{font-family:"Anton",sans-serif;text-transform:uppercase;font-size:26px;margin:12px 0 6px}
+.success p{color:var(--ink-soft);font-size:15px}
+.success .det{margin-top:16px;background:var(--field);border:1px solid var(--bordo);border-radius:10px;padding:14px;text-align:left;font-size:15px;line-height:1.9}
+.success .det span{color:var(--ink-soft)}
+.success .again{display:inline-block;margin-top:14px;color:var(--red);font-size:14px;text-decoration:none}
+
+/* ---- FOOTER ---- */
+/* i 24px laterali vanno ripetuti: .foot viene dopo .wrap e con lo shorthand
+   "padding" ne azzererebbe i lati, incollando le scritte ai bordi */
+.foot{border-top:1px solid var(--line);padding:26px 24px;display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;color:var(--muted);font-size:13.5px}
+.foot > *{min-width:0}
+.foot .logo{font-family:"Anton",sans-serif;text-transform:uppercase;font-size:18px;color:var(--text);letter-spacing:.02em}
+.foot a{color:var(--muted);text-decoration:none}
+.foot a:hover{color:var(--red)}
+@media (max-width:600px){
+  .foot{flex-direction:column;align-items:flex-start;gap:10px;padding:24px 20px}
+}
+
+</style>
+
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+// Un solo pixel: quello del ristorante, condiviso con degustazione e pranzo.
+// PageView, InitiateCheckout e Lead vengono inviati qui.
+fbq('init', '1752658912398511');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=1752658912398511&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel Code -->
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="logo">I Love Meat<small>Per veri carnivori</small></div>
+  <a class="btn" href="#book">Prenota ora</a>
+</nav>
+
+<!-- HERO -->
+<header class="hero">
+  <img class="hero-bg" src="hero.jpg" alt="Costata di manzo marezzata davanti alla brace da I Love Meat" onerror="this.style.display='none'">
+  <div class="wrap hero-inner">
+    <span class="badge"><span class="dot"></span>Sabato 15 agosto</span>
+    <h1 class="display">Ferragosto<br>in <span class="l2">griglieria.</span></h1>
+    <p class="lead">Quest'anno la grigliata la fai senza fatica: niente fumo negli occhi, niente carbonella, niente piatti da lavare. Tu porta amici e famiglia, alla carne ci pensiamo noi. A te resta solo il bello — mangiare e bere.</p>
+    <div class="cta-row">
+      <a class="btn" href="#book">Prenota il tuo tavolo</a>
+      <div class="rate"><span class="stars">★★★★★</span><br><b>4.9</b> · 500+ carnivori soddisfatti</div>
+    </div>
+  </div>
+</header>
+
+<!-- OFFERTA -->
+<section class="section">
+  <div class="wrap">
+    <h2 class="display offerta-titolo">Offerta</h2>
+    <div class="offer">
+      <div class="offer-testo">
+        <span class="badge"><span class="dot"></span>Pochi tavoli rimasti</span>
+        <h2 class="display offer-title">
+          <span class="pre">Solo sabato 15 agosto</span>
+          Grigliata <span class="l2">Mista</span>
+        </h2>
+        <p class="sfida display">Tu siediti.<br><span class="l2">Alla brace pensiamo noi.</span></p>
+        <p class="desc">Il meglio del nostro banco su un unico piatto: <b>salsiccia, spiedini, involtini e tagli di manzo</b>, cotti sulla brace a fuoco vivo e serviti caldi al tavolo.</p>
+        <div class="price"><span class="pre">A soli</span>20€</div>
+        <p class="valida">Solo per il giorno di Ferragosto — posti limitati</p>
+        <a class="btn" href="#book">Voglio la grigliata</a>
+        <div class="fine">Posti limitati — di solito sold out — prenota ora</div>
+      </div>
+      <figure class="offer-foto">
+        <img src="banco-tagli.jpg" alt="Il banco di I Love Meat con spiedini, involtini, salsiccia e tagli di manzo" loading="lazy">
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- PRENOTAZIONE -->
+<section class="section book-sec">
+  <div class="wrap">
+    <div class="book-head">
+      <span class="kicker">Prenota</span>
+      <h2 class="display">Il tuo tavolo di Ferragosto</h2>
+      <span class="badge"><span class="dot"></span>Pochi tavoli rimasti</span>
+    </div>
+
+    <div class="book" id="book" aria-label="Prenota il tavolo">
+      <div class="field">
+        <label for="data">1 · Data <span class="opt">(sabato 15 agosto)</span></label>
+        <input type="date" id="data" required>
+      </div>
+      <div class="field">
+        <label for="persone">2 · Quante persone</label>
+        <select id="persone" required></select>
+      </div>
+      <div class="field">
+        <label for="orario">3 · Orario</label>
+        <select id="orario" required></select>
+      </div>
+      <div class="grid2">
+        <div class="field">
+          <label for="nome">4 · Il tuo nome</label>
+          <input type="text" id="nome" autocomplete="name" placeholder="Nome e cognome" required>
+        </div>
+        <div class="field">
+          <label for="telefono">Telefono</label>
+          <input type="tel" id="telefono" autocomplete="tel" placeholder="Es. 345 688 1360" required>
+        </div>
+      </div>
+      <div class="field">
+        <label for="email">Email</label>
+        <input type="email" id="email" autocomplete="email" placeholder="La tua email">
+      </div>
+      <div class="field">
+        <label for="richieste">Richieste particolari <span class="opt">(facoltativo)</span></label>
+        <input type="text" id="richieste" placeholder="Allergie, seggiolone, tavolo esterno…">
+      </div>
+      <label class="privacy" for="privacy">
+        <input type="checkbox" id="privacy">
+        <span>Ho letto e accetto la <a href="privacy.html" target="_blank" rel="noopener">privacy policy</a> per la gestione della prenotazione.</span>
+      </label>
+
+      <button class="cta" id="cta" disabled>Conferma prenotazione</button>
+      <div class="err" id="err"></div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ESPERIENZA -->
+<section class="section exp">
+  <div class="wrap">
+    <span class="kicker">L'esperienza</span>
+    <h2 class="display">Non è una cena.<br><span class="l2">È un rito.</span></h2>
+    <p class="intro">Da noi la carne si sceglie <b>al banco</b>: ci passi davanti e indichi il taglio che vuoi. Da lì va dritto sulla <b>brace a fuoco vivo</b> e arriva al tavolo quando è pronto, non un minuto prima.</p>
+
+    <div class="banco">
+      <figure class="tile">
+        <img src="banco-tagli.jpg" alt="Il banco di I Love Meat con costate, tomahawk, arrosti e spiedini" loading="lazy">
+        <figcaption>Scegli al banco</figcaption>
+      </figure>
+      <figure class="tile">
+        <img src="esperienza-banco.jpg" alt="Vassoi di spiedini, involtini e salsiccia al banco di I Love Meat" loading="lazy">
+      </figure>
+    </div>
+
+    <div class="cucina">
+      <h3 class="display">La nostra Cucina</h3>
+      <p class="intro">Un viaggio di sapori che ti accompagna per tutta la sera.</p>
+      <div class="galleria">
+        <div class="tile"><img src="cucina-tartare-fichi.jpg" alt="Tartare di manzo con fichi e stracciatella" loading="lazy"></div>
+        <div class="tile"><img src="cucina-tartare-zucchine.jpg" alt="Tartare di manzo con zucchine e salsa" loading="lazy"></div>
+        <div class="tile"><img src="cucina-vitello-tonnato.jpg" alt="Vitello tonnato" loading="lazy"></div>
+        <div class="tile"><img src="cucina-carne-verdure.jpg" alt="Piatto di carne con peperoni, cavolfiore e rucola" loading="lazy"></div>
+        <div class="tile"><img src="cucina-agnolotti.jpg" alt="Agnolotti al sugo d'arrosto" loading="lazy"></div>
+        <div class="tile"><img src="cucina-orecchiette.jpg" alt="Orecchiette al pomodoro con briciole croccanti" loading="lazy"></div>
+      </div>
+      <div class="cta-row"><a class="btn" href="#book">Prenota un tavolo</a></div>
+    </div>
+  </div>
+</section>
+
+<!-- RECENSIONE -->
+<section class="section">
+  <div class="wrap">
+    <div class="review">
+      <div>
+        <div class="stars">★★★★★</div>
+        <p class="quote">"La carne migliore che ho mangiato in città. Cottura perfetta, servizio veloce."</p>
+        <div class="who">— Marco T., Google Reviews</div>
+      </div>
+      <div class="stats">
+        <div class="stat"><b>4.9</b><span>rating medio</span></div>
+        <div class="stat"><b>500+</b><span>recensioni</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TROVACI QUI -->
+<section class="section find">
+  <div class="wrap">
+    <span class="kicker">Dove e quando</span>
+    <h2 class="display">Trovaci qui</h2>
+    <div class="find-grid">
+      <div class="hours">
+        <div class="row"><span>Lunedì – Domenica</span><span>19:30–00:00</span></div>
+        <div class="row addr"><span>Indirizzo</span><a href="https://www.google.com/maps/search/?api=1&query=Largo+II+Giugno+2+Pianezza+TO" target="_blank" rel="noopener">Largo II Giugno 2, Pianezza (TO)</a></div>
+      </div>
+      <div class="map">
+        <iframe src="https://www.google.com/maps?q=Largo%20II%20Giugno%202%20Pianezza%20TO&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Mappa I Love Meat Pianezza"></iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="wrap foot">
+  <div class="logo">I Love Meat</div>
+  <div>
+    <a href="https://www.google.com/maps/search/?api=1&query=Largo+II+Giugno+2+Pianezza+TO" target="_blank" rel="noopener">Largo II Giugno 2, Pianezza (TO)</a>
+    · <a href="tel:+393456881360">+39 345 688 1360</a>
+  </div>
+</footer>
+
+<script>
+/* Barra in alto: trasparente sull'hero, scura appena si scorre */
+(function () {
+  var nav = document.querySelector(".nav");
+  function aggiorna(){ nav.classList.toggle("scrolled", window.scrollY > 40); }
+  aggiorna();
+  window.addEventListener("scroll", aggiorna, {passive:true});
+})();
+
+/* ====== CONFIG: cambia SOLO questo blocco ====== */
+window.LP_CONFIG = (function () {
+  var booked = {}; // nessuna prenotazione simulata: tutti gli orari disponibili
+  return {
+    capacity: 60,        // coperti totali della serata
+    gap: 0,              // margine oltre la capienza (0 = mai overbooking)
+    phone: "+393456881360",
+    // URL dell'app Google Apps Script che scrive nel foglio (link "/exec")
+    sheetUrl: "https://script.google.com/macros/s/AKfycbyCVTPWs0z8ZCcdUy3e2j_WC8bWwWa2U4u-LCbhEfsFxL3ErGv2zX8V0OzVZi_Rl6j0Zg/exec",
+    // Offerta di un giorno solo: il campo data è bloccato su Ferragosto, non si
+    // può prenotare per altre sere. Per aprire più giorni, svuotare fixedDate.
+    fixedDate: "2026-08-15",
+    // Ad agosto il ristorante è aperto solo a cena: la lista del pranzo è vuota
+    // di proposito. Per riaprirlo basta rimettere qui gli orari.
+    lunch: [],
+    dinner: ["19:30","20:00","20:30","21:00","21:30","22:00","22:30","23:00","23:30"],
+    offerName: "Grigliata Mista di Ferragosto",
+    // Finisce nella colonna "Offerta" del foglio, condiviso con le altre landing.
+    // Tenerla corta e sempre uguale: serve a filtrare, non a essere letta.
+    offerTag: "Ferragosto",
+    booked: booked
+  };
+})();
+
+/* ====== LOGICA PRENOTAZIONE (invariata: collegata al Google Sheet) ====== */
+(function () {
+  var C = window.LP_CONFIG || {};
+  var CAPACITY = C.capacity != null ? C.capacity : 80;
+  var GAP = C.gap != null ? C.gap : 0;
+  var PHONE = C.phone || "+393456881360";
+  var SHEET_URL = (C.sheetUrl && C.sheetUrl.indexOf("http")===0) ? C.sheetUrl : "";
+  var OFFER = C.offerName || "Grigliata Mista di Ferragosto";
+  var OFFER_TAG = C.offerTag || "Ferragosto";
+  var FIXED_DATE = C.fixedDate || "";   // giorno unico dell'offerta ("" = tutte le sere)
+  var LUNCH = C.lunch || [];   // vuoto: ad agosto si prenota solo la cena
+  var DINNER = C.dinner || ["19:30","20:00","20:30","21:00","21:30","22:00","22:30","23:00","23:30"];
+  var BOOKED = C.booked || {};
+  var ALL_SLOTS = LUNCH.concat(DINNER);
+  var $ = function (id) { return document.getElementById(id); };
+  var dateEl=$("data"),peopleEl=$("persone"),slotInput=$("orario"),
+      nameEl=$("nome"),phoneEl=$("telefono"),emailEl=$("email"),richiesteEl=$("richieste"),
+      privacyEl=$("privacy"),ctaEl=$("cta"),errEl=$("err"),bookEl=$("book");
+
+  var today=new Date(); today.setHours(0,0,0,0);
+  // Data locale in formato YYYY-MM-DD: toISOString() userebbe UTC e in Italia
+  // (UTC+1/+2) tornerebbe il giorno prima, precompilando una data già passata.
+  var iso=function(d){var m=d.getMonth()+1,g=d.getDate();return d.getFullYear()+"-"+(m<10?"0":"")+m+"-"+(g<10?"0":"")+g;};
+  if(FIXED_DATE){
+    // Un giorno solo: il calendario è già compilato e non si può spostare.
+    dateEl.min=dateEl.max=dateEl.value=FIXED_DATE;
+  } else {
+    dateEl.min=iso(today); if(!dateEl.value) dateEl.value=iso(today);
+  }
+
+  for(var n=1;n<=20;n++){var o=document.createElement("option");o.value=n;o.textContent=n+(n===1?" persona":" persone");peopleEl.appendChild(o);}
+  peopleEl.value="2";
+
+  // All'apertura porta la data sul primo giorno prenotabile (se oggi è finito, domani).
+  // Con la data bloccata non c'è niente da scegliere: si resta su Ferragosto.
+  if(!FIXED_DATE) dateEl.value=firstBookableDate(dateEl.value,parseInt(peopleEl.value,10));
+
+  function bookedFor(date,slot){return (BOOKED[date]&&BOOKED[date][slot])?BOOKED[date][slot]:0;}
+
+  // Perché un orario non è prenotabile: "" = libero, altrimenti il motivo mostrato sul tasto
+  function slotState(date,slot,people){
+    // La regola "sabato pranzo chiuso" non serve più: con LUNCH vuoto restano
+    // solo orari di cena, aperti tutti i giorni. Torna utile se si riapre a pranzo.
+    if(LUNCH.length && new Date(+date.split("-")[0],+date.split("-")[1]-1,+date.split("-")[2]).getDay()===6
+       && LUNCH.indexOf(slot)>=0) return "chiuso";
+    var now=new Date();
+    if(date===iso(now)){                                                   // orario già trascorso
+      var hm=slot.split(":");
+      if((+hm[0]*60 + +hm[1])<=(now.getHours()*60+now.getMinutes())) return "passato";
+    }
+    if((bookedFor(date,slot)+people)>(CAPACITY+GAP)) return "esaurito";
+    return "";
+  }
+
+  function hasFreeSlot(date,people){
+    for(var i=0;i<ALL_SLOTS.length;i++){ if(!slotState(date,ALL_SLOTS[i],people)) return true; }
+    return false;
+  }
+
+  // Primo giorno con almeno un orario libero: a fine serata evita di aprire il
+  // form su un oggi tutto esaurito, proponendo direttamente il giorno dopo.
+  function firstBookableDate(date,people){
+    var p=date.split("-"), d=new Date(+p[0],+p[1]-1,+p[2]);
+    for(var i=0;i<14;i++){
+      var s=iso(d);
+      if(hasFreeSlot(s,people)) return s;
+      d.setDate(d.getDate()+1);
+    }
+    return date;
+  }
+
+  // Gli orari stanno in un menu a tendina: quelli non prenotabili restano
+  // visibili ma disabilitati, col motivo accanto.
+  function renderSlots(){
+    var date=dateEl.value, people=parseInt(peopleEl.value,10)||0;
+    slotInput.innerHTML="";
+    if(!date||!people){ validate(); return; }
+
+    var vuota=document.createElement("option");
+    vuota.value=""; vuota.textContent="Scegli un orario";
+    slotInput.appendChild(vuota);
+
+    ALL_SLOTS.forEach(function(slot){
+      var state=slotState(date,slot,people);
+      var o=document.createElement("option");
+      o.value=state?"":slot;
+      o.textContent=state?(slot+" — "+state):slot;
+      o.disabled=!!state;
+      slotInput.appendChild(o);
+    });
+    slotInput.value="";
+    validate();
+  }
+
+  function validate(){
+    var ok=dateEl.value&&peopleEl.value&&slotInput.value&&nameEl.value.trim().length>=2&&phoneEl.value.trim().length>=6&&privacyEl.checked;
+    if(ctaEl) ctaEl.disabled=!ok; return ok;
+  }
+  function fmtDate(s){var p=s.split("-");return p[2]+"/"+p[1]+"/"+p[0];}
+
+  function fbTrack(ev){ try{ if(typeof fbq==="function") fbq("track",ev); }catch(e){} }
+  var checkoutStarted=false;
+  function startCheckout(){ if(checkoutStarted) return; checkoutStarted=true; fbTrack("InitiateCheckout"); } // inizio prenotazione
+
+  function showSuccess(date,people,slot,nome,tel){
+    fbTrack("Lead"); // conversione: prenotazione completata
+    bookEl.innerHTML=
+      '<div class="success"><div class="ok">✓</div>'+
+      '<h3>Tavolo prenotato, '+nome.split(" ")[0]+'!</h3>'+
+      '<p>Ti aspettiamo da I Love Meat per la Grigliata Mista di Ferragosto. Se serve ti chiamiamo per confermare.</p>'+
+      '<div class="det">'+
+        '<div><span>Data:</span> '+fmtDate(date)+'</div>'+
+        '<div><span>Persone:</span> '+people+'</div>'+
+        '<div><span>Orario:</span> '+slot+'</div>'+
+        '<div><span>A nome di:</span> '+nome+'</div>'+
+        '<div><span>Telefono:</span> '+tel+'</div>'+
+      '</div>'+
+      '<a class="again" href="tel:'+PHONE+'">Preferisci confermare a voce? Chiamaci</a></div>';
+    bookEl.scrollIntoView({behavior:"smooth",block:"center"});
+  }
+
+  function submit(){
+    if(!validate()){errEl.textContent="Compila i campi obbligatori e accetta la privacy.";return;}
+    errEl.textContent="";
+    var date=dateEl.value,people=peopleEl.value,slot=slotInput.value,nome=nameEl.value.trim(),tel=phoneEl.value.trim(),
+        email=emailEl.value.trim(),richieste=richiesteEl.value.trim();
+
+    // Se non è ancora configurato il foglio, mostra comunque la conferma
+    if(!SHEET_URL){ showSuccess(date,people,slot,nome,tel); return; }
+
+    // Invia la prenotazione al Google Sheet (Apps Script)
+    ctaEl.disabled=true; ctaEl.textContent="Invio in corso…";
+    var body=new URLSearchParams({
+      data:date, ora:slot, persone:people, nome:nome, telefono:tel,
+      email:email, richieste:richieste, privacy:(privacyEl.checked?"Sì":"No"),
+      offerta:OFFER_TAG
+    });
+    fetch(SHEET_URL,{method:"POST",mode:"no-cors",body:body})
+      .then(function(){ showSuccess(date,people,slot,nome,tel); })
+      .catch(function(){
+        // Rete non disponibile: invita a chiamare, senza perdere la prenotazione
+        ctaEl.disabled=false; ctaEl.textContent="Conferma prenotazione";
+        errEl.textContent="Connessione assente. Chiamaci per confermare: "+PHONE;
+      });
+  }
+
+  // Apre il calendario toccando tutto il campo data (non solo l'iconcina).
+  // Con la data bloccata non si apre: ci sarebbe un solo giorno selezionabile.
+  function openDatePicker(){ if(FIXED_DATE) return; try{ if(typeof dateEl.showPicker==="function") dateEl.showPicker(); }catch(e){} }
+  dateEl.addEventListener("click",openDatePicker);
+  dateEl.addEventListener("focus",openDatePicker);
+
+  dateEl.addEventListener("change",function(){startCheckout();renderSlots();});
+  peopleEl.addEventListener("change",function(){startCheckout();renderSlots();});
+  slotInput.addEventListener("change",function(){startCheckout();validate();});
+  nameEl.addEventListener("input",function(){startCheckout();validate();});
+  phoneEl.addEventListener("input",function(){startCheckout();validate();});
+  privacyEl.addEventListener("change",validate);
+  ctaEl.addEventListener("click",submit);
+  var cl=$("call-link"); if(cl) cl.href="tel:"+PHONE;
+
+  renderSlots();
+})();
+</script>
+</body>
+</html>
