@@ -2,6 +2,20 @@
 var SHEET_ID = '1HzGRC4Jp5lSoJVxDIMrL-msBMYKkljgjkw9CsjdDg8w';
 // Email del ristorante che riceve la notifica
 var RESTAURANT_EMAIL = 'simoneignazzi1@gmail.com';
+
+// Indirizzo con cui FIRMARE le email in uscita.
+//
+// Di default le email partono dall'account che possiede questo script
+// (dani.sp9869@gmail.com): è Gmail a deciderlo, non il codice. Per farle
+// partire da un altro indirizzo NON basta scriverlo qui: deve essere un alias
+// VERIFICATO di quell'account (Gmail → Impostazioni → Account e importazione →
+// "Invia messaggi come" → aggiungi indirizzo e conferma il codice ricevuto).
+//
+// Lascialo VUOTO finché l'alias non è verificato. Se ci metti un indirizzo che
+// non è un alias, Gmail rifiuta l'invio e il cliente non riceve niente: per
+// questo il codice controlla prima, e in caso di dubbio spedisce dall'account.
+// Per vedere quali alias sono già utilizzabili: Esegui → aliasDisponibili.
+var MITTENTE_ALIAS = '';
 // Dati mostrati al cliente nell'email di conferma
 var RESTAURANT_NOME     = 'I Love Meat';
 var RESTAURANT_TEL      = '+39 345 688 1360';
@@ -64,7 +78,7 @@ function doPost(e) {
             trEmail_('Richieste', p.richieste) +
           '</table>' +
         '</div>';
-      var opts = { htmlBody: html, name: 'Prenotazioni I Love Meat' };
+      var opts = opzioniInvio_({ htmlBody: html });
       if (p.email && p.email.indexOf('@') > 0) opts.replyTo = p.email;
       MailApp.sendEmail(RESTAURANT_EMAIL, subj, 'Nuova prenotazione ricevuta.', opts);
     } catch (mailErr) {}
@@ -80,6 +94,27 @@ function doPost(e) {
   } finally {
     lock.releaseLock();
   }
+}
+
+// Alias verificati dell'account, letti una volta sola per esecuzione: chiederli
+// a Gmail ad ogni invio sarebbe una chiamata di rete sprecata.
+var _alias = null;
+function aliasUsabile_(indirizzo) {
+  if (!indirizzo) return false;
+  if (_alias === null) {
+    // Se lo script non ha (ancora) il permesso su Gmail, si prosegue senza
+    // alias invece di far fallire tutta la prenotazione.
+    try { _alias = GmailApp.getAliases(); } catch (e) { _alias = []; }
+  }
+  return _alias.indexOf(indirizzo) !== -1;
+}
+
+// Opzioni comuni a tutte le email: nome mostrato e, se disponibile, mittente.
+function opzioniInvio_(extra) {
+  var o = extra || {};
+  o.name = 'Prenotazioni ' + RESTAURANT_NOME;
+  if (aliasUsabile_(MITTENTE_ALIAS)) o.from = MITTENTE_ALIAS;
+  return o;
 }
 
 // L'email del cliente è facoltativa nel form: un controllo minimo evita di
@@ -182,11 +217,10 @@ function inviaConfermaCliente_(p) {
     (p.richieste ? 'Richieste: ' + p.richieste + '\n' : '') +
     '\nPer modifiche rispondi a questa email o chiamaci allo ' + RESTAURANT_TEL + '.';
 
-  MailApp.sendEmail(dest, msg.oggetto, testo, {
+  MailApp.sendEmail(dest, msg.oggetto, testo, opzioniInvio_({
     htmlBody: html,
-    name: 'Prenotazioni ' + RESTAURANT_NOME,
     replyTo: RESTAURANT_EMAIL   // le risposte del cliente vanno al ristorante
-  });
+  }));
   return true;
 }
 
@@ -199,8 +233,24 @@ function trEmail_(label, value) {
 // indirizzo partono le email e quanti invii restano oggi. Non è esposta
 // sull'URL pubblico apposta: l'indirizzo non deve finire in chiaro sul web.
 function chiMandaLeMail() {
-  var msg = 'Le email partono da: ' + Session.getEffectiveUser().getEmail() +
-            '\nInvii ancora disponibili oggi: ' + MailApp.getRemainingDailyQuota();
+  var account = Session.getEffectiveUser().getEmail();
+  var alias;
+  try { alias = GmailApp.getAliases(); } catch (e) { alias = ['(permesso Gmail non ancora concesso)']; }
+  var msg =
+    'Account dello script:  ' + account +
+    '\nAlias verificati:      ' + (alias.length ? alias.join(', ') : '(nessuno)') +
+    '\nMITTENTE_ALIAS:        ' + (MITTENTE_ALIAS || '(vuoto)') +
+    '\nLe email partiranno da: ' + (aliasUsabile_(MITTENTE_ALIAS) ? MITTENTE_ALIAS : account) +
+    '\nInvii disponibili oggi: ' + MailApp.getRemainingDailyQuota();
+  Logger.log(msg);
+  return msg;
+}
+
+// Comodo da lanciare a mano dopo aver verificato un alias in Gmail.
+function aliasDisponibili() {
+  var a = GmailApp.getAliases();
+  var msg = a.length ? 'Alias utilizzabili: ' + a.join(', ')
+                     : 'Nessun alias verificato su questo account.';
   Logger.log(msg);
   return msg;
 }
