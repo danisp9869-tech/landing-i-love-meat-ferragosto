@@ -3,7 +3,8 @@ var SHEET_ID = '1HzGRC4Jp5lSoJVxDIMrL-msBMYKkljgjkw9CsjdDg8w';
 // Email del ristorante che riceve la notifica
 var RESTAURANT_EMAIL = 'simoneignazzi1@gmail.com';
 
-// Indirizzo con cui FIRMARE le email in uscita.
+// Indirizzo con cui FIRMARE le email in uscita: è l'INTERRUTTORE della conferma
+// al cliente.
 //
 // Di default le email partono dall'account che possiede questo script
 // (dani.sp9869@gmail.com): è Gmail a deciderlo, non il codice. Per farle
@@ -11,9 +12,10 @@ var RESTAURANT_EMAIL = 'simoneignazzi1@gmail.com';
 // VERIFICATO di quell'account (Gmail → Impostazioni → Account e importazione →
 // "Invia messaggi come" → aggiungi indirizzo e conferma il codice ricevuto).
 //
-// Lascialo VUOTO finché l'alias non è verificato. Se ci metti un indirizzo che
-// non è un alias, Gmail rifiuta l'invio e il cliente non riceve niente: per
-// questo il codice controlla prima, e in caso di dubbio spedisce dall'account.
+// Finché qui non c'è un alias verificato, la conferma al cliente NON viene
+// inviata: a chi prenota non deve mai arrivare posta da un indirizzo personale
+// dell'agenzia — sembrerebbe spam e brucerebbe la fiducia nel ristorante.
+// La notifica interna al ristorante parte comunque, resta fra noi.
 // Per vedere quali alias sono già utilizzabili: Esegui → aliasDisponibili.
 var MITTENTE_ALIAS = '';
 // Dati mostrati al cliente nell'email di conferma
@@ -22,9 +24,11 @@ var RESTAURANT_TEL      = '+39 345 688 1360';
 var RESTAURANT_INDIRIZZO = 'Largo II Giugno 2, Pianezza (TO)';
 var RESTAURANT_MAPS     = 'https://www.google.com/maps/search/?api=1&query=Largo+II+Giugno+2+Pianezza+TO';
 
-// "Offerta" è l'ULTIMA colonna, dopo "Creata": messa in fondo, le righe già
-// presenti nel foglio restano allineate e avranno solo la cella vuota.
-var INTESTAZIONI = ['Data', 'Ora', 'Persone', 'Nome', 'Telefono', 'Email', 'Richieste', 'Privacy', 'Creata', 'Offerta'];
+// "Offerta" e "Marketing" sono le ULTIME colonne, dopo "Creata": messe in fondo,
+// le righe già presenti nel foglio restano allineate e avranno solo la cella vuota.
+// "Marketing" registra il consenso FACOLTATIVO alle comunicazioni commerciali:
+// è la prova del consenso richiesta dall'art. 7 GDPR, quindi va conservata.
+var INTESTAZIONI = ['Data', 'Ora', 'Persone', 'Nome', 'Telefono', 'Email', 'Richieste', 'Privacy', 'Creata', 'Offerta', 'Marketing'];
 
 // Fuso del ristorante. Un progetto Apps Script senza fuso impostato gira in
 // UTC: in agosto (ora legale italiana) scriverebbe due ore indietro, e una
@@ -57,12 +61,14 @@ function doPost(e) {
       // Foglio nato prima che esistesse la colonna: la aggiunge una volta sola
       var ultimaCol = sheet.getLastColumn();
       var testate = sheet.getRange(1, 1, 1, ultimaCol).getValues()[0];
-      if (testate.indexOf('Offerta') === -1) sheet.getRange(1, ultimaCol + 1).setValue('Offerta');
+      if (testate.indexOf('Offerta') === -1) { sheet.getRange(1, ++ultimaCol).setValue('Offerta'); }
+      if (testate.indexOf('Marketing') === -1) { sheet.getRange(1, ultimaCol + 1).setValue('Marketing'); }
     }
     sheet.appendRow([
       dataIta_(p.data), p.ora || '', p.persone || '', p.nome || '', p.telefono || '',
       p.email || '', p.richieste || '', p.privacy || '', creataIta_(),
-      p.offerta || ''   // "Ferragosto", "Bombette" o "Degustazione", dalla landing
+      p.offerta || '',  // "Ferragosto", "Bombette" o "Degustazione", dalla landing
+      p.marketing || ''  // "Sì"/"No": consenso facoltativo alle offerte via email
     ]);
 
     try {
@@ -76,6 +82,7 @@ function doPost(e) {
             trEmail_('Data', dataIta_(p.data)) + trEmail_('Orario', p.ora) + trEmail_('Persone', p.persone) +
             trEmail_('Nome', p.nome) + trEmail_('Telefono', p.telefono) + trEmail_('Email', p.email) +
             trEmail_('Richieste', p.richieste) +
+            trEmail_('Offerte via email', p.marketing) +
           '</table>' +
         '</div>';
       var opts = opzioniInvio_({ htmlBody: html });
@@ -175,6 +182,11 @@ function inviaConfermaCliente_(p) {
   var dest = String(p.email || '').trim();
   if (!emailValida_(dest)) return false;
 
+  // Interruttore di sicurezza: senza alias verificato la mail partirebbe
+  // dall'account personale che possiede lo script. Meglio nessuna conferma
+  // che una conferma da un mittente estraneo al ristorante.
+  if (!aliasUsabile_(MITTENTE_ALIAS)) return false;
+
   var nome = String(p.nome || '').trim();
   var primoNome = nome ? nome.split(' ')[0] : '';
   var msg = messaggioCliente_(p, primoNome);
@@ -261,6 +273,9 @@ function chiMandaLeMail() {
     '\nAlias verificati:      ' + (alias.length ? alias.join(', ') : '(nessuno)') +
     '\nMITTENTE_ALIAS:        ' + (MITTENTE_ALIAS || '(vuoto)') +
     '\nLe email partiranno da: ' + (aliasUsabile_(MITTENTE_ALIAS) ? MITTENTE_ALIAS : account) +
+    '\nConferma al cliente:   ' + (aliasUsabile_(MITTENTE_ALIAS)
+        ? 'ATTIVA'
+        : 'BLOCCATA (manca l\'alias verificato: parte solo la notifica al ristorante)') +
     '\nInvii disponibili oggi: ' + MailApp.getRemainingDailyQuota();
   Logger.log(msg);
   return msg;
@@ -276,7 +291,7 @@ function aliasDisponibili() {
 }
 
 // La versione dice QUALE codice è davvero pubblicato: salvare non basta,
-// bisogna ridistribuire. Se qui non leggi "v6", la distribuzione è vecchia.
+// bisogna ridistribuire. Se qui non leggi "v8", la distribuzione è vecchia.
 function doGet() {
-  return ContentService.createTextOutput('I Love Meat — endpoint prenotazioni attivo · v6 (conferma cliente + verificaFoglio)');
+  return ContentService.createTextOutput('I Love Meat — endpoint prenotazioni attivo · v8 (conferma cliente solo da alias verificato + colonna Marketing)');
 }
