@@ -276,7 +276,7 @@ function aliasDisponibili() {
 }
 
 // La versione dice QUALE codice è davvero pubblicato: salvare non basta,
-// bisogna ridistribuire. Se qui non leggi "v5", la distribuzione è vecchia.
+// bisogna ridistribuire. Se qui non leggi "v6", la distribuzione è vecchia.
 function doGet() {
-  return ContentService.createTextOutput('I Love Meat — endpoint prenotazioni attivo · v6 (verificaFoglio per l'autorizzazione)');
+  return ContentService.createTextOutput('I Love Meat — endpoint prenotazioni attivo · v6 (conferma cliente + verificaFoglio)');
 }
