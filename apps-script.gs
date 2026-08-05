@@ -229,6 +229,26 @@ function trEmail_(label, value) {
   return '<tr><td style="border:1px solid #eee;color:#666;font-weight:bold">' + label + '</td><td style="border:1px solid #eee">' + value + '</td></tr>';
 }
 
+// DA LANCIARE PER PRIMA COSA dopo aver incollato il codice su un account nuovo
+// (Esegui → verificaFoglio). Tocca Fogli e Gmail insieme, quindi costringe
+// Google a chiedere TUTTE le autorizzazioni in un colpo solo.
+//
+// Serve perché autorizzando dalla sola distribuzione può capitare che il
+// permesso sui Fogli non venga concesso: lo script allora parte, risulta
+// "completato", ma fallisce dentro e non scrive nulla. Se questa funzione
+// risponde col numero di righe, l'endpoint è a posto davvero.
+function verificaFoglio() {
+  var ss = SpreadsheetApp.openById(SHEET_ID);
+  var sheet = ss.getSheetByName('Prenotazioni');
+  var msg =
+    'Foglio raggiunto: ' + ss.getName() +
+    '\nScheda "Prenotazioni": ' + (sheet ? 'trovata, ' + sheet.getLastRow() + ' righe' : 'ASSENTE') +
+    '\nEmail in uscita da: ' + Session.getEffectiveUser().getEmail() +
+    '\nInvii disponibili oggi: ' + MailApp.getRemainingDailyQuota();
+  Logger.log(msg);
+  return msg;
+}
+
 // Da lanciare A MANO dall'editor (Esegui → chiMandaLeMail): dice da quale
 // indirizzo partono le email e quanti invii restano oggi. Non è esposta
 // sull'URL pubblico apposta: l'indirizzo non deve finire in chiaro sul web.
@@ -258,5 +278,5 @@ function aliasDisponibili() {
 // La versione dice QUALE codice è davvero pubblicato: salvare non basta,
 // bisogna ridistribuire. Se qui non leggi "v5", la distribuzione è vecchia.
 function doGet() {
-  return ContentService.createTextOutput('I Love Meat — endpoint prenotazioni attivo · v5 (conferma cliente, testo Ferragosto)');
+  return ContentService.createTextOutput('I Love Meat — endpoint prenotazioni attivo · v6 (verificaFoglio per l'autorizzazione)');
 }
