@@ -88,58 +88,90 @@ function emailValida_(v) {
   return /^[^@\s]+@[^@\s.]+\.[^@\s]+$/.test(String(v || '').trim());
 }
 
-// Conferma al cliente. Deve reggere tutte le landing che condividono questo
-// endpoint: mostra l'orario solo se è stato scelto (a Ferragosto non si chiede)
-// e il nome dell'offerta solo se la landing lo ha mandato.
+// Testo della conferma, scelto in base all'offerta. Questo endpoint è condiviso
+// fra tutte le landing: senza questo bivio, chi prenota la degustazione a
+// novembre si vedrebbe arrivare l'email di Ferragosto.
+function messaggioCliente_(p, primoNome) {
+  var ciao = primoNome ? 'Ciao ' + primoNome + ' ☺️' : 'Ciao ☺️';
+
+  if (String(p.offerta || '') === 'Ferragosto') {
+    return {
+      oggetto: 'La tua prenotazione per Ferragosto è confermata 🔥',
+      righe: [
+        ciao,
+        'La tua prenotazione per Ferragosto è confermata: il tuo posto è riservato. 🔥',
+        'Ti aspetta la nostra Grigliata Mista a 20€: carne alla brace, tavolate piene e quella bella atmosfera da giorno di festa in compagnia.',
+        '📅 15 agosto — dalle ore 12:30\n📍 ' + RESTAURANT_INDIRIZZO,
+        "Un'unica cosa: se dovesse succedere qualcosa e non riuscissi a venire, faccelo sapere almeno una settimana prima, così possiamo liberare il tavolo per qualcun altro.",
+        'Ci vediamo il 15! 🍖'
+      ]
+    };
+  }
+
+  // Tutte le altre landing (degustazione, bombette, pranzo): testo neutro,
+  // con data e orario presi dalla prenotazione.
+  var data = dataIta_(p.data);
+  var quando = data + (p.ora ? ' alle ' + p.ora : '');
+  return {
+    oggetto: 'Prenotazione confermata da ' + RESTAURANT_NOME + (data ? ' — ' + data : ''),
+    righe: [
+      ciao,
+      'La tua prenotazione è confermata: il tuo posto è riservato. 🔥',
+      (quando ? '📅 ' + quando + '\n' : '') + '📍 ' + RESTAURANT_INDIRIZZO,
+      "Un'unica cosa: se dovesse succedere qualcosa e non riuscissi a venire, faccelo sapere il prima possibile, così possiamo liberare il tavolo per qualcun altro.",
+      'Ci vediamo presto! 🍖'
+    ]
+  };
+}
+
+// Conferma al cliente: prima il messaggio, sotto il riepilogo della prenotazione.
 function inviaConfermaCliente_(p) {
   var dest = String(p.email || '').trim();
   if (!emailValida_(dest)) return false;
 
   var nome = String(p.nome || '').trim();
   var primoNome = nome ? nome.split(' ')[0] : '';
-  var data = dataIta_(p.data);
-  var quando = data + (p.ora ? ' alle ' + p.ora : '');
+  var msg = messaggioCliente_(p, primoNome);
 
-  var oggetto = 'Prenotazione confermata da ' + RESTAURANT_NOME + (data ? ' — ' + data : '');
+  // L'indirizzo diventa un link a Maps ovunque compaia nel messaggio.
+  var linkMaps = '<a href="' + RESTAURANT_MAPS + '" style="color:#d10a1c">' + RESTAURANT_INDIRIZZO + '</a>';
+
+  var paragrafi = msg.righe.map(function (r) {
+    return '<p style="margin:0 0 14px">' +
+      r.split(RESTAURANT_INDIRIZZO).join(linkMaps).split('\n').join('<br>') +
+      '</p>';
+  }).join('');
 
   var html =
     '<div style="font-family:Arial,Helvetica,sans-serif;font-size:15px;color:#111;line-height:1.55;max-width:520px">' +
-      '<h2 style="margin:0 0 6px">Ci vediamo da ' + RESTAURANT_NOME + '!</h2>' +
-      '<p style="margin:0 0 16px">' +
-        (primoNome ? 'Ciao ' + primoNome + ', abbiamo' : 'Abbiamo') +
-        ' ricevuto la tua prenotazione' + (quando ? ' per <b>' + quando + '</b>' : '') + '.' +
-      '</p>' +
-      '<table cellpadding="7" style="border-collapse:collapse;border:1px solid #eee;margin-bottom:16px">' +
-        trEmail_('Offerta', p.offerta) +
-        trEmail_('Data', data) +
+      paragrafi +
+      '<p style="margin:22px 0 8px;font-weight:bold">Riepilogo della prenotazione</p>' +
+      '<table cellpadding="7" style="border-collapse:collapse;border:1px solid #eee">' +
+        trEmail_('Data', dataIta_(p.data)) +
         trEmail_('Orario', p.ora) +
         trEmail_('Persone', p.persone) +
         trEmail_('A nome di', nome) +
         trEmail_('Telefono', p.telefono) +
         trEmail_('Richieste', p.richieste) +
       '</table>' +
-      '<p style="margin:0 0 6px"><b>Dove siamo</b><br>' +
-        '<a href="' + RESTAURANT_MAPS + '" style="color:#d10a1c">' + RESTAURANT_INDIRIZZO + '</a></p>' +
-      '<p style="margin:0 0 16px"><b>Telefono</b><br>' +
-        '<a href="tel:' + RESTAURANT_TEL.replace(/\s/g, '') + '" style="color:#d10a1c">' + RESTAURANT_TEL + '</a></p>' +
-      '<p style="margin:0;color:#666;font-size:13.5px">' +
-        'Se devi modificare o annullare, rispondi a questa email o chiamaci. A presto!' +
+      '<p style="margin:16px 0 0;color:#666;font-size:13.5px">' +
+        'Per modifiche rispondi a questa email o chiamaci allo ' +
+        '<a href="tel:' + RESTAURANT_TEL.replace(/\s/g, '') + '" style="color:#d10a1c">' + RESTAURANT_TEL + '</a>.' +
       '</p>' +
     '</div>';
 
   var testo =
-    'Ci vediamo da ' + RESTAURANT_NOME + '!\n\n' +
-    (primoNome ? 'Ciao ' + primoNome + ', abbiamo' : 'Abbiamo') +
-    ' ricevuto la tua prenotazione' + (quando ? ' per ' + quando : '') + '.\n\n' +
-    (p.offerta ? 'Offerta: ' + p.offerta + '\n' : '') +
-    (data ? 'Data: ' + data + '\n' : '') +
+    msg.righe.join('\n\n') + '\n\n' +
+    '— Riepilogo della prenotazione —\n' +
+    (dataIta_(p.data) ? 'Data: ' + dataIta_(p.data) + '\n' : '') +
     (p.ora ? 'Orario: ' + p.ora + '\n' : '') +
     (p.persone ? 'Persone: ' + p.persone + '\n' : '') +
     (nome ? 'A nome di: ' + nome + '\n' : '') +
-    '\n' + RESTAURANT_INDIRIZZO + '\n' + RESTAURANT_TEL + '\n\n' +
-    'Se devi modificare o annullare, rispondi a questa email o chiamaci.';
+    (p.telefono ? 'Telefono: ' + p.telefono + '\n' : '') +
+    (p.richieste ? 'Richieste: ' + p.richieste + '\n' : '') +
+    '\nPer modifiche rispondi a questa email o chiamaci allo ' + RESTAURANT_TEL + '.';
 
-  MailApp.sendEmail(dest, oggetto, testo, {
+  MailApp.sendEmail(dest, msg.oggetto, testo, {
     htmlBody: html,
     name: 'Prenotazioni ' + RESTAURANT_NOME,
     replyTo: RESTAURANT_EMAIL   // le risposte del cliente vanno al ristorante
@@ -152,8 +184,18 @@ function trEmail_(label, value) {
   return '<tr><td style="border:1px solid #eee;color:#666;font-weight:bold">' + label + '</td><td style="border:1px solid #eee">' + value + '</td></tr>';
 }
 
+// Da lanciare A MANO dall'editor (Esegui → chiMandaLeMail): dice da quale
+// indirizzo partono le email e quanti invii restano oggi. Non è esposta
+// sull'URL pubblico apposta: l'indirizzo non deve finire in chiaro sul web.
+function chiMandaLeMail() {
+  var msg = 'Le email partono da: ' + Session.getEffectiveUser().getEmail() +
+            '\nInvii ancora disponibili oggi: ' + MailApp.getRemainingDailyQuota();
+  Logger.log(msg);
+  return msg;
+}
+
 // La versione dice QUALE codice è davvero pubblicato: salvare non basta,
-// bisogna ridistribuire. Se qui non leggi "v2", la distribuzione è vecchia.
+// bisogna ridistribuire. Se qui non leggi "v5", la distribuzione è vecchia.
 function doGet() {
-  return ContentService.createTextOutput('I Love Meat — endpoint prenotazioni attivo · v4 (conferma email al cliente)');
+  return ContentService.createTextOutput('I Love Meat — endpoint prenotazioni attivo · v5 (conferma cliente, testo Ferragosto)');
 }
