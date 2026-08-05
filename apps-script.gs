@@ -88,13 +88,22 @@ function emailValida_(v) {
   return /^[^@\s]+@[^@\s.]+\.[^@\s]+$/.test(String(v || '').trim());
 }
 
-// Testo della conferma, scelto in base all'offerta. Questo endpoint è condiviso
-// fra tutte le landing: senza questo bivio, chi prenota la degustazione a
-// novembre si vedrebbe arrivare l'email di Ferragosto.
+// Testo della conferma, scelto in base all'offerta.
+//
+// Questo endpoint è UNO SOLO per tutte le landing, che girano in contemporanea:
+// Ferragosto e Bombette sono attive insieme. Ogni landing manda il proprio tag
+// nel campo "offerta" (Ferragosto / Bombette / Degustazione; la landing pranzo
+// non ne manda nessuno), ed è quel tag a decidere il testo. Chi prenota da una
+// landing non può quindi ricevere il messaggio di un'altra.
+//
+// Il confronto è normalizzato (spazi e maiuscole) perché un tag scritto
+// "ferragosto " manderebbe altrimenti il messaggio sbagliato. Se il tag manca o
+// non è riconosciuto si cade sul testo neutro: mai su quello di un'altra offerta.
 function messaggioCliente_(p, primoNome) {
   var ciao = primoNome ? 'Ciao ' + primoNome + ' ☺️' : 'Ciao ☺️';
+  var offerta = String(p.offerta || '').trim().toLowerCase();
 
-  if (String(p.offerta || '') === 'Ferragosto') {
+  if (offerta === 'ferragosto') {
     return {
       oggetto: 'La tua prenotazione per Ferragosto è confermata 🔥',
       righe: [
@@ -108,8 +117,10 @@ function messaggioCliente_(p, primoNome) {
     };
   }
 
-  // Tutte le altre landing (degustazione, bombette, pranzo): testo neutro,
-  // con data e orario presi dalla prenotazione.
+  // Bombette, degustazione, pranzo e qualsiasi tag non previsto: testo neutro,
+  // con data e orario presi dalla prenotazione. Nessun riferimento a Ferragosto.
+  // Per dare a Bombette un testo suo basta aggiungere qui sopra un ramo
+  // `if (offerta === 'bombette')`, sulla falsariga di quello di Ferragosto.
   var data = dataIta_(p.data);
   var quando = data + (p.ora ? ' alle ' + p.ora : '');
   return {
