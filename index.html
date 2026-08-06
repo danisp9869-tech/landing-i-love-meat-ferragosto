@@ -170,6 +170,32 @@ a{color:inherit}
 .book-head .badge{margin-top:14px}
 /* Data e orario non sono più campi del form: restano scritti qui sopra */
 .book-head .quando{margin-top:12px;color:var(--muted);font-size:15px}
+/* ---- SOLD OUT ----
+   Prende il posto del form quando le prenotazioni sono chiuse. Resta scuro:
+   la card bianca del form significava "qui si fa qualcosa", qui invece non
+   c'è niente da compilare e non deve attirare come un modulo. */
+.soldout{max-width:520px;margin:0 auto;text-align:center;padding:38px 26px;
+  background:linear-gradient(160deg,#241813,#140f0d 70%);
+  border:2px solid rgba(209,10,28,.55);border-radius:24px;
+  box-shadow:0 0 0 1px rgba(209,10,28,.12),0 24px 60px rgba(0,0,0,.5)}
+/* il timbro: leggermente storto, come quello di gomma sui registri */
+.soldout .so-timbro{display:inline-block;transform:rotate(-4deg);
+  border:3px solid var(--red);color:var(--red);border-radius:10px;
+  padding:6px 18px;font-size:clamp(30px,7vw,48px);letter-spacing:.04em;
+  opacity:.9;margin-bottom:20px}
+.soldout h3{font-size:clamp(26px,4.6vw,40px);margin-bottom:12px}
+.soldout p{color:var(--muted);font-size:16.5px;max-width:40ch;margin:0 auto 12px}
+.soldout p b{color:var(--text)}
+/* rilancio sull'offerta ancora aperta: staccato da una riga, così si legge
+   come "ma c'è dell'altro" e non come parte del messaggio di chiusura */
+.soldout .so-altra{margin-top:26px;padding-top:24px;border-top:1px solid var(--line)}
+.soldout .so-invito{color:var(--text);font-size:17px;margin-bottom:16px}
+.soldout .btn{width:100%;max-width:340px}
+.soldout .so-tel{display:inline-block;margin-top:20px;color:var(--muted);
+  font-size:14px;text-decoration:underline;text-underline-offset:3px}
+.soldout .so-tel:hover{color:var(--red)}
+@media (max-width:600px){.soldout{padding:32px 20px}}
+
 /* card bianca: dentro serve tutta la scala di colori invertita rispetto al resto */
 .book{--ink:#1c1512;--ink-soft:#6d635b;--field:#f4f0ec;--bordo:#ddd4cb;
   max-width:520px;margin:0 auto;background:#fff;border:1px solid #e6ded6;border-radius:20px;padding:22px;
@@ -291,49 +317,30 @@ src="https://www.facebook.com/tr?id=1752658912398511&ev=PageView&noscript=1"
 <section class="section book-sec">
   <div class="wrap">
     <div class="book-head">
-      <span class="kicker">Prenota</span>
-      <h2 class="display">Il tuo tavolo di Ferragosto</h2>
-      <span class="badge"><span class="dot"></span>Pochi tavoli rimasti</span>
+      <span class="kicker">Ferragosto</span>
+      <h2 class="display">Prenotazioni chiuse</h2>
       <p class="quando">Sabato 15 agosto, dalle 12:30.</p>
     </div>
 
-    <div class="book" id="book" aria-label="Prenota il tavolo">
-      <div class="field">
-        <label for="persone">1 · Quante persone</label>
-        <select id="persone" required></select>
-      </div>
-      <div class="grid2">
-        <div class="field">
-          <label for="nome">2 · Il tuo nome</label>
-          <input type="text" id="nome" autocomplete="name" placeholder="Nome e cognome" required>
-        </div>
-        <div class="field">
-          <label for="telefono">3 · Telefono</label>
-          <input type="tel" id="telefono" autocomplete="tel" placeholder="Es. 345 688 1360" required>
-        </div>
-      </div>
-      <div class="field">
-        <label for="email">Email</label>
-        <input type="email" id="email" autocomplete="email" placeholder="La tua email">
-      </div>
-      <div class="field">
-        <label for="richieste">Richieste particolari <span class="opt">(facoltativo)</span></label>
-        <input type="text" id="richieste" placeholder="Allergie, seggiolone, tavolo esterno…">
-      </div>
-      <label class="privacy" for="privacy">
-        <input type="checkbox" id="privacy">
-        <span>Ho letto e accetto la <a href="privacy.html" target="_blank" rel="noopener">privacy policy</a> per la gestione della prenotazione.</span>
-      </label>
+    <!-- SOLD OUT — i campi del form sono stati rimossi, non nascosti: così
+         nessuno può inviare una prenotazione che non possiamo accettare.
+         Per riaprire, rimettere il blocco .book con i campi: la logica in
+         fondo alla pagina è intatta e si riattiva da sola quando li trova. -->
+    <div class="soldout" id="book" role="status">
+      <div class="so-timbro display">Sold out</div>
+      <h3 class="display">Siamo al completo</h3>
+      <p>Abbiamo esaurito tutti i tavoli per il pranzo di Ferragosto. Grazie a chi si è prenotato — <b>ci vediamo il 15</b>.</p>
 
-      <!-- Consenso marketing FACOLTATIVO: non entra nella validazione, il tasto resta attivo -->
-      <label class="privacy optional" for="marketing">
-        <input type="checkbox" id="marketing">
-        <span>Desidero ricevere offerte e novità da I Love Meat via email. Facoltativo, posso disiscrivermi quando voglio.</span>
-      </label>
+      <!-- Chi arriva qui a offerta chiusa non deve trovare un vicolo cieco:
+           lo mandiamo sull'altra offerta ancora aperta. -->
+      <div class="so-altra">
+        <p class="so-invito">Scopri la nostra offerta speciale bombette</p>
+        <a class="btn" href="https://bombette.ilovemeatgriglieria.it/">Scopri le bombette</a>
+      </div>
 
-      <button class="cta" id="cta" disabled>Conferma prenotazione</button>
-      <div class="err" id="err"></div>
+      <a class="so-tel" href="tel:+393456881360">Preferisci aspettare un posto per Ferragosto? Chiamaci</a>
     </div>
+
   </div>
 </section>
 
@@ -400,6 +407,12 @@ window.LP_CONFIG = (function () {
   var $ = function (id) { return document.getElementById(id); };
   var peopleEl=$("persone"),nameEl=$("nome"),phoneEl=$("telefono"),emailEl=$("email"),
       richiesteEl=$("richieste"),privacyEl=$("privacy"),marketingEl=$("marketing"),ctaEl=$("cta"),errEl=$("err"),bookEl=$("book");
+
+  // Prenotazioni chiuse: al posto del form c'è il blocco "sold out" e i campi
+  // non esistono più in pagina. Senza questa uscita anticipata lo script
+  // andrebbe in errore alla prima riga che riempie il menu delle persone.
+  // Rimettendo il form, tutto quello che segue torna a funzionare da solo.
+  if (!peopleEl) return;
 
   for(var n=1;n<=20;n++){var o=document.createElement("option");o.value=n;o.textContent=n+(n===1?" persona":" persone");peopleEl.appendChild(o);}
   peopleEl.value="2";
