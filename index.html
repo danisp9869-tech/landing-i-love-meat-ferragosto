@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Ferragosto in Griglieria — Grigliata Mista 20€ | I Love Meat Pianezza</title>
-<meta name="description" content="Ferragosto a Pianezza: grigliata mista di carne a 20€. Quest'anno non cucini tu — alla brace ci pensiamo noi, tu pensa solo a mangiare e a bere. Prenota il tavolo da I Love Meat.">
+<title>Tagliata di Fassone Piemontese 19,90€ — Venerdì 14 Agosto | I Love Meat Pianezza</title>
+<meta name="description" content="Venerdì 14 agosto a cena da I Love Meat, Pianezza: tagliata di fassone piemontese alla brace a 19,90€, contorno e calice di vino inclusi. Posti limitati, prenota il tavolo.">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -170,32 +170,6 @@ a{color:inherit}
 .book-head .badge{margin-top:14px}
 /* Data e orario non sono più campi del form: restano scritti qui sopra */
 .book-head .quando{margin-top:12px;color:var(--muted);font-size:15px}
-/* ---- SOLD OUT ----
-   Prende il posto del form quando le prenotazioni sono chiuse. Resta scuro:
-   la card bianca del form significava "qui si fa qualcosa", qui invece non
-   c'è niente da compilare e non deve attirare come un modulo. */
-.soldout{max-width:520px;margin:0 auto;text-align:center;padding:38px 26px;
-  background:linear-gradient(160deg,#241813,#140f0d 70%);
-  border:2px solid rgba(209,10,28,.55);border-radius:24px;
-  box-shadow:0 0 0 1px rgba(209,10,28,.12),0 24px 60px rgba(0,0,0,.5)}
-/* il timbro: leggermente storto, come quello di gomma sui registri */
-.soldout .so-timbro{display:inline-block;transform:rotate(-4deg);
-  border:3px solid var(--red);color:var(--red);border-radius:10px;
-  padding:6px 18px;font-size:clamp(30px,7vw,48px);letter-spacing:.04em;
-  opacity:.9;margin-bottom:20px}
-.soldout h3{font-size:clamp(26px,4.6vw,40px);margin-bottom:12px}
-.soldout p{color:var(--muted);font-size:16.5px;max-width:40ch;margin:0 auto 12px}
-.soldout p b{color:var(--text)}
-/* rilancio sull'offerta ancora aperta: staccato da una riga, così si legge
-   come "ma c'è dell'altro" e non come parte del messaggio di chiusura */
-.soldout .so-altra{margin-top:26px;padding-top:24px;border-top:1px solid var(--line)}
-.soldout .so-invito{color:var(--text);font-size:17px;margin-bottom:16px}
-.soldout .btn{width:100%;max-width:340px}
-.soldout .so-tel{display:inline-block;margin-top:20px;color:var(--muted);
-  font-size:14px;text-decoration:underline;text-underline-offset:3px}
-.soldout .so-tel:hover{color:var(--red)}
-@media (max-width:600px){.soldout{padding:32px 20px}}
-
 /* card bianca: dentro serve tutta la scala di colori invertita rispetto al resto */
 .book{--ink:#1c1512;--ink-soft:#6d635b;--field:#f4f0ec;--bordo:#ddd4cb;
   max-width:520px;margin:0 auto;background:#fff;border:1px solid #e6ded6;border-radius:20px;padding:22px;
@@ -208,6 +182,8 @@ a{color:inherit}
 /* font-size 16px obbligatorio: sotto, iOS zooma la pagina al focus */
 .field input,.field select{width:100%;max-width:100%;min-width:0;padding:11px 12px;background:var(--field);border:1px solid var(--bordo);border-radius:10px;color:var(--ink);font-size:16px;font-family:inherit}
 .field input::placeholder{color:#a99f96}
+.field input[type="date"]{-webkit-appearance:none;appearance:none;display:block}
+.field input[type="date"]::-webkit-date-and-time-value{text-align:left}
 .field input:focus,.field select:focus{outline:none;border-color:var(--red);background:#fff}
 .field option:disabled{color:#a99f96}
 .privacy{display:flex;align-items:flex-start;gap:10px;margin:2px 0 14px;color:var(--ink-soft);font-size:12.5px;line-height:1.4;cursor:pointer}
@@ -279,7 +255,7 @@ src="https://www.facebook.com/tr?id=1752658912398511&ev=PageView&noscript=1"
 <header class="hero">
   <img class="hero-bg" src="hero.jpg" alt="Costata di manzo marezzata davanti alla brace da I Love Meat" onerror="this.style.display='none'">
   <div class="wrap hero-inner">
-    <span class="badge"><span class="dot"></span>Sabato 15 agosto</span>
+    <span class="badge"><span class="dot"></span>Venerdì 14 agosto, a cena</span>
     <h1 class="display">Ferragosto<br>in <span class="l2">griglieria.</span></h1>
     <p class="lead">Quest'anno la grigliata la fai senza fatica: niente fumo negli occhi, niente carbonella, niente piatti da lavare. Tu porta amici e famiglia, alla carne ci pensiamo noi. A te resta solo il bello — mangiare e bere.</p>
     <div class="cta-row">
@@ -296,15 +272,15 @@ src="https://www.facebook.com/tr?id=1752658912398511&ev=PageView&noscript=1"
     <div class="offer">
       <div class="offer-testo">
         <h2 class="display offer-title">
-          <span class="pre">Solo sabato 15 agosto</span>
-          Grigliata <span class="l2">Mista</span>
+          <span class="pre">Solo venerdì 14 agosto, a cena</span>
+          Tagliata di <span class="l2">Fassone Piemontese</span>
         </h2>
         <p class="sfida display">Tu siediti.<br><span class="l2">Alla brace pensiamo noi.</span></p>
-        <p class="desc">Direttamente dal nostro banco carne: <b>salsiccia, capocollo, hamburger, costine e alette di pollo</b>, cotti sulla brace a fuoco vivo e serviti caldi al tavolo.</p>
-        <div class="price"><span class="pre">A soli</span>20€</div>
-        <p class="esclusi">Bevande e coperto esclusi</p>
-        <p class="valida">Solo per il giorno di Ferragosto — posti limitati</p>
-        <a class="btn" href="#book">Voglio la grigliata</a>
+        <p class="desc">Fassone piemontese tagliato al coltello e cotto sulla brace a fuoco vivo, servito caldo al tavolo.</p>
+        <div class="price"><span class="pre">A soli</span>19,90€</div>
+        <p class="esclusi">Contorno e calice di vino inclusi</p>
+        <p class="valida">Solo venerdì 14 agosto — posti limitati</p>
+        <a class="btn" href="#book">Voglio la tagliata</a>
       </div>
       <figure class="offer-foto">
         <img src="banco-tagli.jpg" alt="Il banco di I Love Meat con spiedini, involtini, salsiccia e tagli di manzo" loading="lazy">
@@ -317,28 +293,55 @@ src="https://www.facebook.com/tr?id=1752658912398511&ev=PageView&noscript=1"
 <section class="section book-sec">
   <div class="wrap">
     <div class="book-head">
-      <span class="kicker">Ferragosto</span>
-      <h2 class="display">Prenotazioni chiuse</h2>
-      <p class="quando">Sabato 15 agosto, dalle 12:30.</p>
+      <span class="kicker">Prenota</span>
+      <h2 class="display">Il tuo tavolo di venerdì</h2>
+      <p class="quando">Venerdì 14 agosto, a cena.</p>
     </div>
 
-    <!-- SOLD OUT — i campi del form sono stati rimossi, non nascosti: così
-         nessuno può inviare una prenotazione che non possiamo accettare.
-         Per riaprire, rimettere il blocco .book con i campi: la logica in
-         fondo alla pagina è intatta e si riattiva da sola quando li trova. -->
-    <div class="soldout" id="book" role="status">
-      <div class="so-timbro display">Sold out</div>
-      <h3 class="display">Siamo al completo</h3>
-      <p>Abbiamo esaurito tutti i tavoli per il pranzo di Ferragosto. Grazie a chi si è prenotato — <b>ci vediamo il 15</b>.</p>
-
-      <!-- Chi arriva qui a offerta chiusa non deve trovare un vicolo cieco:
-           lo mandiamo sull'altra offerta ancora aperta. -->
-      <div class="so-altra">
-        <p class="so-invito">Scopri la nostra offerta speciale bombette</p>
-        <a class="btn" href="https://bombette.ilovemeatgriglieria.it/">Scopri le bombette</a>
+    <div class="book" id="book" aria-label="Prenota il tavolo">
+      <div class="field">
+        <label for="data">1 · Data <span class="opt">(venerdì 14 agosto)</span></label>
+        <input type="date" id="data" required>
       </div>
+      <div class="field">
+        <label for="persone">2 · Quante persone</label>
+        <select id="persone" required></select>
+      </div>
+      <div class="field">
+        <label for="orario">3 · Orario</label>
+        <select id="orario" required></select>
+      </div>
+      <div class="grid2">
+        <div class="field">
+          <label for="nome">4 · Il tuo nome</label>
+          <input type="text" id="nome" autocomplete="name" placeholder="Nome e cognome" required>
+        </div>
+        <div class="field">
+          <label for="telefono">Telefono</label>
+          <input type="tel" id="telefono" autocomplete="tel" placeholder="Es. 345 688 1360" required>
+        </div>
+      </div>
+      <div class="field">
+        <label for="email">Email</label>
+        <input type="email" id="email" autocomplete="email" placeholder="La tua email">
+      </div>
+      <div class="field">
+        <label for="richieste">Richieste particolari <span class="opt">(facoltativo)</span></label>
+        <input type="text" id="richieste" placeholder="Allergie, seggiolone, tavolo esterno…">
+      </div>
+      <label class="privacy" for="privacy">
+        <input type="checkbox" id="privacy">
+        <span>Ho letto e accetto la <a href="privacy.html" target="_blank" rel="noopener">privacy policy</a> per la gestione della prenotazione.</span>
+      </label>
 
-      <a class="so-tel" href="tel:+393456881360">Preferisci aspettare un posto per Ferragosto? Chiamaci</a>
+      <!-- Consenso marketing FACOLTATIVO: non entra nella validazione, il tasto resta attivo -->
+      <label class="privacy optional" for="marketing">
+        <input type="checkbox" id="marketing">
+        <span>Desidero ricevere offerte e novità da I Love Meat via email. Facoltativo, posso disiscrivermi quando voglio.</span>
+      </label>
+
+      <button class="cta" id="cta" disabled>Conferma prenotazione</button>
+      <div class="err" id="err"></div>
     </div>
 
   </div>
@@ -351,7 +354,7 @@ src="https://www.facebook.com/tr?id=1752658912398511&ev=PageView&noscript=1"
     <h2 class="display">Trovaci qui</h2>
     <div class="find-grid">
       <div class="hours">
-        <div class="row evento"><span>Ferragosto — sabato 15 agosto</span><span>dalle 12:30</span></div>
+        <div class="row evento"><span>Venerdì 14 agosto</span><span>a cena, dalle 19:30</span></div>
         <div class="row addr"><span>Indirizzo</span><a href="https://www.google.com/maps/search/?api=1&query=Largo+II+Giugno+2+Pianezza+TO" target="_blank" rel="noopener">Largo II Giugno 2, Pianezza (TO)</a></div>
       </div>
       <div class="map">
@@ -385,55 +388,105 @@ window.LP_CONFIG = (function () {
     phone: "+393456881360",
     // URL dell'app Google Apps Script che scrive nel foglio (link "/exec")
     sheetUrl: "https://script.google.com/macros/s/AKfycbyCVTPWs0z8ZCcdUy3e2j_WC8bWwWa2U4u-LCbhEfsFxL3ErGv2zX8V0OzVZi_Rl6j0Zg/exec",
-    // Serata unica: data e orario non si scelgono nel form. La data parte
-    // comunque verso il foglio, sennò la colonna resterebbe vuota.
-    fixedDate: "2026-08-15",
-    offerName: "Grigliata Mista di Ferragosto",
+    // Serata unica: il calendario è bloccato su venerdì 14 agosto, non si può
+    // prenotare per altre sere. Per aprire più giorni, svuotare fixedDate.
+    fixedDate: "2026-08-14",
+    // Solo cena: nessun orario di pranzo. Rimettendone qui, ricompaiono nel menu.
+    lunch: [],
+    dinner: ["19:30","20:00","20:30","21:00","21:30","22:00","22:30"],
+    offerName: "Tagliata di Fassone Piemontese",
     // Finisce nella colonna "Offerta" del foglio, condiviso con le altre landing.
     // Tenerla corta e sempre uguale: serve a filtrare, non a essere letta.
-    offerTag: "Ferragosto"
+    // NON è più "Ferragosto": quel tag fa partire l'email che parla del 15
+    // agosto a pranzo, che con questa offerta sarebbe sbagliata.
+    offerTag: "Tagliata 14/08"
   };
 })();
 
 /* ====== LOGICA PRENOTAZIONE (collegata al Google Sheet) ======
-   Serata unica: niente scelta di data e orario, quindi niente slot, niente
-   capienza, niente calendario. Restano persone, nome, telefono e richieste. */
+   Serata unica: la data è bloccata su venerdì 14 agosto e gli orari sono solo
+   di cena. Resta la scelta dell'orario, che al ristorante serve per distribuire
+   i tavoli. */
 (function () {
   var C = window.LP_CONFIG || {};
   var PHONE = C.phone || "+393456881360";
   var SHEET_URL = (C.sheetUrl && C.sheetUrl.indexOf("http")===0) ? C.sheetUrl : "";
-  var OFFER_TAG = C.offerTag || "Ferragosto";
-  var FIXED_DATE = C.fixedDate || "";   // data spedita al foglio, non chiesta all'utente
+  var OFFER_TAG = C.offerTag || "Tagliata 14/08";
+  var FIXED_DATE = C.fixedDate || "";   // giorno unico dell'offerta ("" = tutte le sere)
+  var LUNCH = C.lunch || [];            // vuoto: si prenota solo a cena
+  var DINNER = C.dinner || ["19:30","20:00","20:30","21:00","21:30","22:00","22:30"];
+  var ALL_SLOTS = LUNCH.concat(DINNER);
   var $ = function (id) { return document.getElementById(id); };
-  var peopleEl=$("persone"),nameEl=$("nome"),phoneEl=$("telefono"),emailEl=$("email"),
+  var dateEl=$("data"),peopleEl=$("persone"),slotInput=$("orario"),
+      nameEl=$("nome"),phoneEl=$("telefono"),emailEl=$("email"),
       richiesteEl=$("richieste"),privacyEl=$("privacy"),marketingEl=$("marketing"),ctaEl=$("cta"),errEl=$("err"),bookEl=$("book");
 
-  // Prenotazioni chiuse: al posto del form c'è il blocco "sold out" e i campi
-  // non esistono più in pagina. Senza questa uscita anticipata lo script
-  // andrebbe in errore alla prima riga che riempie il menu delle persone.
-  // Rimettendo il form, tutto quello che segue torna a funzionare da solo.
+  // Se il form non è in pagina (offerta chiusa) non c'è niente da inizializzare.
   if (!peopleEl) return;
+
+  // Data locale in formato YYYY-MM-DD: toISOString() userebbe UTC e in Italia
+  // (UTC+1/+2) tornerebbe il giorno prima.
+  var iso=function(d){var m=d.getMonth()+1,g=d.getDate();return d.getFullYear()+"-"+(m<10?"0":"")+m+"-"+(g<10?"0":"")+g;};
+  if(FIXED_DATE){
+    // Un giorno solo: il calendario è già compilato e non si può spostare.
+    dateEl.min=dateEl.max=dateEl.value=FIXED_DATE;
+  } else {
+    var oggi=new Date(); oggi.setHours(0,0,0,0);
+    dateEl.min=iso(oggi); if(!dateEl.value) dateEl.value=iso(oggi);
+  }
 
   for(var n=1;n<=20;n++){var o=document.createElement("option");o.value=n;o.textContent=n+(n===1?" persona":" persone");peopleEl.appendChild(o);}
   peopleEl.value="2";
 
+  // Perché un orario non è prenotabile: "" = libero, altrimenti il motivo mostrato
+  function slotState(date,slot){
+    var now=new Date();
+    if(date===iso(now)){                                   // orario già trascorso
+      var hm=slot.split(":");
+      if((+hm[0]*60 + +hm[1])<=(now.getHours()*60+now.getMinutes())) return "passato";
+    }
+    return "";
+  }
+
+  // Gli orari stanno in un menu a tendina: quelli non prenotabili restano
+  // visibili ma disabilitati, col motivo accanto.
+  function renderSlots(){
+    var date=dateEl.value;
+    slotInput.innerHTML="";
+    var vuota=document.createElement("option");
+    vuota.value=""; vuota.textContent="Scegli un orario";
+    slotInput.appendChild(vuota);
+    ALL_SLOTS.forEach(function(slot){
+      var state=slotState(date,slot);
+      var op=document.createElement("option");
+      op.value=state?"":slot;
+      op.textContent=state?(slot+" — "+state):slot;
+      op.disabled=!!state;
+      slotInput.appendChild(op);
+    });
+    slotInput.value="";
+    validate();
+  }
+
   function validate(){
-    var ok=peopleEl.value&&nameEl.value.trim().length>=2&&phoneEl.value.trim().length>=6&&privacyEl.checked;
+    var ok=dateEl.value&&peopleEl.value&&slotInput.value&&nameEl.value.trim().length>=2&&phoneEl.value.trim().length>=6&&privacyEl.checked;
     if(ctaEl) ctaEl.disabled=!ok; return ok;
   }
+  function fmtDate(s){var p=s.split("-");return p[2]+"/"+p[1]+"/"+p[0];}
 
   function fbTrack(ev){ try{ if(typeof fbq==="function") fbq("track",ev); }catch(e){} }
   var checkoutStarted=false;
   function startCheckout(){ if(checkoutStarted) return; checkoutStarted=true; fbTrack("InitiateCheckout"); } // inizio prenotazione
 
-  function showSuccess(people,nome,tel){
+  function showSuccess(date,people,slot,nome,tel){
     fbTrack("Lead"); // conversione: prenotazione completata
     bookEl.innerHTML=
       '<div class="success"><div class="ok">✓</div>'+
       '<h3>Tavolo prenotato, '+nome.split(" ")[0]+'!</h3>'+
-      '<p>Ti aspettiamo da I Love Meat per la Grigliata Mista di Ferragosto. Se serve ti chiamiamo per confermare.</p>'+
+      '<p>Ti aspettiamo da I Love Meat per la Tagliata di Fassone Piemontese. Se serve ti chiamiamo per confermare.</p>'+
       '<div class="det">'+
-        '<div><span>Quando:</span> sabato 15 agosto, dalle 12:30</div>'+
+        '<div><span>Data:</span> '+fmtDate(date)+'</div>'+
+        '<div><span>Orario:</span> '+slot+'</div>'+
         '<div><span>Persone:</span> '+people+'</div>'+
         '<div><span>A nome di:</span> '+nome+'</div>'+
         '<div><span>Telefono:</span> '+tel+'</div>'+
@@ -445,24 +498,23 @@ window.LP_CONFIG = (function () {
   function submit(){
     if(!validate()){errEl.textContent="Compila i campi obbligatori e accetta la privacy.";return;}
     errEl.textContent="";
-    var people=peopleEl.value,nome=nameEl.value.trim(),tel=phoneEl.value.trim(),
+    var date=dateEl.value,people=peopleEl.value,slot=slotInput.value,
+        nome=nameEl.value.trim(),tel=phoneEl.value.trim(),
         email=emailEl.value.trim(),richieste=richiesteEl.value.trim();
 
     // Se non è ancora configurato il foglio, mostra comunque la conferma
-    if(!SHEET_URL){ showSuccess(people,nome,tel); return; }
+    if(!SHEET_URL){ showSuccess(date,people,slot,nome,tel); return; }
 
-    // Invia la prenotazione al Google Sheet (Apps Script). Le colonne del foglio
-    // sono le stesse delle altre landing: "ora" parte vuota perché qui non si
-    // chiede, "data" è fissa sul giorno di Ferragosto.
+    // Invia la prenotazione al Google Sheet (Apps Script)
     ctaEl.disabled=true; ctaEl.textContent="Invio in corso…";
     var body=new URLSearchParams({
-      data:FIXED_DATE, ora:"", persone:people, nome:nome, telefono:tel,
+      data:date, ora:slot, persone:people, nome:nome, telefono:tel,
       email:email, richieste:richieste, privacy:(privacyEl.checked?"Sì":"No"),
       marketing:(marketingEl.checked?"Sì":"No"),
       offerta:OFFER_TAG
     });
     fetch(SHEET_URL,{method:"POST",mode:"no-cors",body:body})
-      .then(function(){ showSuccess(people,nome,tel); })
+      .then(function(){ showSuccess(date,people,slot,nome,tel); })
       .catch(function(){
         // Rete non disponibile: invita a chiamare, senza perdere la prenotazione
         ctaEl.disabled=false; ctaEl.textContent="Conferma prenotazione";
@@ -470,7 +522,14 @@ window.LP_CONFIG = (function () {
       });
   }
 
+  // Con la data bloccata il calendario non si apre: c'è un solo giorno scegliibile
+  function openDatePicker(){ if(FIXED_DATE) return; try{ if(typeof dateEl.showPicker==="function") dateEl.showPicker(); }catch(e){} }
+  dateEl.addEventListener("click",openDatePicker);
+  dateEl.addEventListener("focus",openDatePicker);
+
+  dateEl.addEventListener("change",function(){startCheckout();renderSlots();});
   peopleEl.addEventListener("change",function(){startCheckout();validate();});
+  slotInput.addEventListener("change",function(){startCheckout();validate();});
   nameEl.addEventListener("input",function(){startCheckout();validate();});
   phoneEl.addEventListener("input",function(){startCheckout();validate();});
   emailEl.addEventListener("input",startCheckout);
@@ -479,7 +538,7 @@ window.LP_CONFIG = (function () {
   ctaEl.addEventListener("click",submit);
   var cl=$("call-link"); if(cl) cl.href="tel:"+PHONE;
 
-  validate();
+  renderSlots();
 })();
 </script>
 </body>
