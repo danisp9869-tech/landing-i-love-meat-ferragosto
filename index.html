@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Tagliata di Fassone Piemontese 19,90€ — Venerdì 14 Agosto | I Love Meat Pianezza</title>
-<meta name="description" content="Venerdì 14 agosto a cena da I Love Meat, Pianezza: tagliata di fassone piemontese alla brace a 19,90€, contorno e calice di vino inclusi. Posti limitati, prenota il tavolo.">
+<title>Tagliata di Fassona Piemontese 19,90€ — Venerdì 14 Agosto | I Love Meat Pianezza</title>
+<meta name="description" content="Venerdì 14 agosto a cena da I Love Meat, Pianezza: tagliata di fassona piemontese alla brace a 19,90€, contorno e calice di vino inclusi. Posti limitati, prenota il tavolo.">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -64,7 +64,10 @@ a{color:inherit}
 @keyframes pulse-gold{0%{box-shadow:0 0 0 0 rgba(255,194,51,.5)}70%{box-shadow:0 0 0 7px rgba(255,194,51,0)}100%{box-shadow:0 0 0 0 rgba(255,194,51,0)}}
 /* foto più luminosa sotto: doppia ombra (una stretta, una larga) per tenere
    staccate le scritte senza dover riscurire l'immagine */
-.hero h1{font-size:clamp(64px,13vw,196px);text-shadow:0 2px 10px rgba(0,0,0,.85),0 4px 40px rgba(0,0,0,.75)}
+/* Titolo lungo (4 righe su schermo stretto): il minimo sta a 46px, non a 64,
+   sennò su un telefono da 320px riempie l'hero da bordo a bordo e la foto
+   sotto non si vede più. */
+.hero h1{font-size:clamp(46px,13vw,196px);text-shadow:0 2px 10px rgba(0,0,0,.85),0 4px 40px rgba(0,0,0,.75)}
 .hero h1 .l2{color:var(--red)}
 .hero .lead{color:#f4ece3;font-size:19px;max-width:42ch;margin:24px auto 32px;text-shadow:0 1px 6px rgba(0,0,0,.9),0 2px 20px rgba(0,0,0,.8)}
 .hero .cta-row{display:flex;align-items:center;justify-content:center;gap:22px;flex-wrap:wrap}
@@ -119,9 +122,6 @@ a{color:inherit}
 .offer .sfida .l2{color:var(--red)}
 .offer .price s{display:inline-block;margin-right:14px;color:var(--muted);font-size:.46em;vertical-align:middle;
   text-decoration-line:line-through;text-decoration-color:var(--red);text-decoration-thickness:.07em}
-/* Nota di servizio sotto il prezzo: deve leggersi, non gridare. Grigia e
-   minuscola, così non compete con il prezzo sopra né con la riga rossa sotto. */
-.offer .esclusi{margin-top:6px;color:var(--muted);font-size:13px}
 .offer .valida{margin-top:8px;color:var(--red);font-size:12.5px;font-weight:800;letter-spacing:.12em;text-transform:uppercase}
 .offer-foto{position:relative;z-index:1;border-radius:16px;overflow:hidden;border:1px solid var(--line);min-height:380px}
 .offer-foto img{width:100%;height:100%;object-fit:cover}
@@ -256,8 +256,8 @@ src="https://www.facebook.com/tr?id=1752658912398511&ev=PageView&noscript=1"
   <img class="hero-bg" src="hero.jpg" alt="Costata di manzo marezzata davanti alla brace da I Love Meat" onerror="this.style.display='none'">
   <div class="wrap hero-inner">
     <span class="badge"><span class="dot"></span>Venerdì 14 agosto, a cena</span>
-    <h1 class="display">Ferragosto<br>in <span class="l2">griglieria.</span></h1>
-    <p class="lead">Quest'anno la grigliata la fai senza fatica: niente fumo negli occhi, niente carbonella, niente piatti da lavare. Tu porta amici e famiglia, alla carne ci pensiamo noi. A te resta solo il bello — mangiare e bere.</p>
+    <h1 class="display">La vera tagliata<br>di <span class="l2">Fassona Piemontese</span></h1>
+    <p class="lead">Tagliata di vera fassona piemontese, cotta sulla brace. Una così morbida e succosa non l'hai mai mangiata: vieni a provarla da I Love Meat.</p>
     <div class="cta-row">
       <a class="btn" href="#book">Prenota il tuo tavolo</a>
       <div class="rate"><span class="stars">★★★★★</span><br><b>4.9</b> · 500+ carnivori soddisfatti</div>
@@ -273,13 +273,12 @@ src="https://www.facebook.com/tr?id=1752658912398511&ev=PageView&noscript=1"
       <div class="offer-testo">
         <h2 class="display offer-title">
           <span class="pre">Solo venerdì 14 agosto, a cena</span>
-          Tagliata di <span class="l2">Fassone Piemontese</span>
+          Tagliata di <span class="l2">Fassona Piemontese</span>
         </h2>
         <p class="sfida display">Tu siediti.<br><span class="l2">Alla brace pensiamo noi.</span></p>
-        <p class="desc">Fassone piemontese tagliato al coltello e cotto sulla brace a fuoco vivo, servito caldo al tavolo.</p>
+        <p class="desc">Tagliata cotta sulla brace a fuoco vivo, servita con <b>contorno e un calice di vino</b>. In esclusiva solo per venerdì 14 agosto.</p>
         <div class="price"><span class="pre">A soli</span>19,90€</div>
-        <p class="esclusi">Contorno e calice di vino inclusi</p>
-        <p class="valida">Solo venerdì 14 agosto — posti limitati</p>
+        <p class="valida">Posti limitati</p>
         <a class="btn" href="#book">Voglio la tagliata</a>
       </div>
       <figure class="offer-foto">
@@ -394,7 +393,7 @@ window.LP_CONFIG = (function () {
     // Solo cena: nessun orario di pranzo. Rimettendone qui, ricompaiono nel menu.
     lunch: [],
     dinner: ["19:30","20:00","20:30","21:00","21:30","22:00","22:30"],
-    offerName: "Tagliata di Fassone Piemontese",
+    offerName: "Tagliata di Fassona Piemontese",
     // Finisce nella colonna "Offerta" del foglio, condiviso con le altre landing.
     // Tenerla corta e sempre uguale: serve a filtrare, non a essere letta.
     // NON è più "Ferragosto": quel tag fa partire l'email che parla del 15
@@ -483,7 +482,7 @@ window.LP_CONFIG = (function () {
     bookEl.innerHTML=
       '<div class="success"><div class="ok">✓</div>'+
       '<h3>Tavolo prenotato, '+nome.split(" ")[0]+'!</h3>'+
-      '<p>Ti aspettiamo da I Love Meat per la Tagliata di Fassone Piemontese. Se serve ti chiamiamo per confermare.</p>'+
+      '<p>Ti aspettiamo da I Love Meat per la Tagliata di Fassona Piemontese. Se serve ti chiamiamo per confermare.</p>'+
       '<div class="det">'+
         '<div><span>Data:</span> '+fmtDate(date)+'</div>'+
         '<div><span>Orario:</span> '+slot+'</div>'+
