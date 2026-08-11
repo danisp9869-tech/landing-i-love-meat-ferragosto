@@ -468,11 +468,12 @@ window.LP_CONFIG = (function () {
     lunch: [],
     dinner: ["19:30","20:00","20:30","21:00","21:30","22:00","22:30"],
     offerName: "Tagliata di Fassona Piemontese",
-    // Finisce nella colonna "Offerta" del foglio, condiviso con le altre landing.
+    // Finisce nella colonna "Offerta" del foglio (condiviso con le altre
+    // landing) e nell'oggetto dell'email che arriva al ristorante.
     // Tenerla corta e sempre uguale: serve a filtrare, non a essere letta.
-    // NON è più "Ferragosto": quel tag fa partire l'email che parla del 15
-    // agosto a pranzo, che con questa offerta sarebbe sbagliata.
-    offerTag: "Tagliata 14/08"
+    // NON è "Ferragosto": quel tag fa partire l'email al cliente che parla del
+    // 15 agosto a pranzo, che con questa offerta sarebbe sbagliata.
+    offerTag: "Tagliata"
   };
 })();
 
@@ -484,7 +485,7 @@ window.LP_CONFIG = (function () {
   var C = window.LP_CONFIG || {};
   var PHONE = C.phone || "+393456881360";
   var SHEET_URL = (C.sheetUrl && C.sheetUrl.indexOf("http")===0) ? C.sheetUrl : "";
-  var OFFER_TAG = C.offerTag || "Tagliata 14/08";
+  var OFFER_TAG = C.offerTag || "Tagliata";
   var FIXED_DATE = C.fixedDate || "";   // giorno unico dell'offerta ("" = tutte le sere)
   var LUNCH = C.lunch || [];            // vuoto: si prenota solo a cena
   var DINNER = C.dinner || ["19:30","20:00","20:30","21:00","21:30","22:00","22:30"];
