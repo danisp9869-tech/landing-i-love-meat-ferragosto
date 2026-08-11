@@ -1,7 +1,7 @@
 // ID del foglio della CENA
 var SHEET_ID = '1HzGRC4Jp5lSoJVxDIMrL-msBMYKkljgjkw9CsjdDg8w';
 // Email del ristorante che riceve la notifica
-var RESTAURANT_EMAIL = 'simoneignazzi1@gmail.com';
+var RESTAURANT_EMAIL = 'Ilovemeatprenotazioni@gmail.com';
 
 // Indirizzo con cui FIRMARE le email in uscita: è l'INTERRUTTORE della conferma
 // al cliente.
