@@ -244,6 +244,32 @@ a{color:inherit}
 .field input[type="date"]{-webkit-appearance:none;appearance:none;display:block}
 .field input[type="date"]::-webkit-date-and-time-value{text-align:left}
 .field input:focus,.field select:focus{outline:none;border-color:var(--red);background:#fff}
+/* ---- CALENDARIO (stessa grafica del form, come nella landing pranzo) ----
+   Il popup nativo di <input type=date> non si può stilizzare: l'input vero resta
+   nascosto (tiene il valore AAAA-MM-GG e tutta la logica) e sopra c'è un campo
+   con un calendario disegnato a mano, coi colori del form. */
+.date-wrap{position:relative}
+.date-wrap input[type="date"]{display:none}
+.date-view{width:100%;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:11px 12px;background:var(--field);border:1px solid var(--bordo);border-radius:10px;color:var(--ink);font-size:16px;font-family:inherit;cursor:pointer;text-align:left}
+.date-view:hover,.date-view[aria-expanded="true"]{border-color:var(--red)}
+.date-view.placeholder{color:#a99f96}
+.date-view::after{content:"";width:22px;height:22px;flex:0 0 auto;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23d10a1c' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='4' width='18' height='18' rx='2'/%3E%3Cline x1='3' y1='9' x2='21' y2='9'/%3E%3Cline x1='8' y1='2' x2='8' y2='6'/%3E%3Cline x1='16' y1='2' x2='16' y2='6'/%3E%3C/svg%3E");background-size:contain;background-repeat:no-repeat;background-position:center}
+.cal{position:absolute;z-index:30;top:calc(100% + 8px);left:0;width:320px;max-width:100%;background:#fff;border:1px solid var(--bordo);border-radius:14px;box-shadow:0 18px 44px rgba(0,0,0,.22);padding:14px;font-family:inherit}
+.cal[hidden]{display:none}
+.cal-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.cal-title{font-weight:700;color:var(--ink);font-size:15px}
+.cal-nav{width:32px;height:32px;border:1px solid var(--bordo);border-radius:9px;background:var(--field);color:var(--red);font-size:18px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;font-family:inherit}
+.cal-nav:hover{border-color:var(--red)}
+.cal-nav:disabled{opacity:.35;cursor:default;border-color:var(--bordo)}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px}
+.cal-dow{text-align:center;font-size:11px;font-weight:700;color:var(--ink-soft);text-transform:uppercase;letter-spacing:.04em;padding:4px 0}
+.cal-day{aspect-ratio:1/1;display:flex;align-items:center;justify-content:center;border:1px solid transparent;border-radius:9px;background:var(--field);color:var(--ink);font-size:14px;font-weight:600;cursor:pointer}
+.cal-day:hover{border-color:var(--red)}
+.cal-day.empty{background:transparent;cursor:default}
+.cal-day.off{background:transparent;color:#c9c0b6;cursor:not-allowed}
+.cal-day.off:hover{border-color:transparent}
+.cal-day.today{color:var(--red)}
+.cal-day.sel{background:var(--red);border-color:var(--red);color:#fff}
 .field option:disabled{color:#a99f96}
 .privacy{display:flex;align-items:flex-start;gap:10px;margin:2px 0 14px;color:var(--ink-soft);font-size:12.5px;line-height:1.4;cursor:pointer}
 .privacy input{flex:0 0 auto;width:18px;height:18px;margin-top:1px;accent-color:var(--red);cursor:pointer}
@@ -341,8 +367,12 @@ src="https://www.facebook.com/tr?id=1752658912398511&ev=PageView&noscript=1"
 
     <div class="book" id="book" aria-label="Prenota il tavolo">
       <div class="field">
-        <label for="data">1 · Data</label>
-        <input type="date" id="data" required>
+        <label for="dataView">1 · Data</label>
+        <div class="date-wrap">
+          <button type="button" id="dataView" class="date-view placeholder" aria-haspopup="dialog" aria-expanded="false"><span id="dataViewLabel">Scegli il giorno</span></button>
+          <div class="cal" id="cal" role="dialog" aria-label="Scegli il giorno" hidden></div>
+          <input type="date" id="data" required>
+        </div>
       </div>
       <div class="field">
         <label for="persone">2 · Quante persone</label>
@@ -634,10 +664,6 @@ window.LP_CONFIG = (function () {
       });
   }
 
-  // Con la data bloccata il calendario non si apre: c'è un solo giorno scegliibile
-  function openDatePicker(){ if(FIXED_DATE) return; try{ if(typeof dateEl.showPicker==="function") dateEl.showPicker(); }catch(e){} }
-  dateEl.addEventListener("click",openDatePicker);
-  dateEl.addEventListener("focus",openDatePicker);
 
   dateEl.addEventListener("change",function(){startCheckout();renderSlots();});
   peopleEl.addEventListener("change",function(){startCheckout();validate();});
@@ -658,6 +684,76 @@ window.LP_CONFIG = (function () {
   }
 
   renderSlots();
+})();
+
+/* ====== CALENDARIO (grafica coerente col form) ======
+   Pilota l'input#data nascosto: alla scelta ne imposta il valore e lancia
+   "change", così la logica degli orari qui sopra resta invariata. I giorni
+   prenotabili sono quelli tra min e max dell'input, impostati dalla logica
+   prenotazione (da oggi a fine offerta): qui non si ripetono le regole. */
+(function(){
+  var input=document.getElementById("data");
+  var view=document.getElementById("dataView");
+  var label=document.getElementById("dataViewLabel");
+  var cal=document.getElementById("cal");
+  if(!input||!view||!cal) return;
+
+  var MESI=["Gennaio","Febbraio","Marzo","Aprile","Maggio","Giugno","Luglio","Agosto","Settembre","Ottobre","Novembre","Dicembre"];
+  var DOW=["Lun","Mar","Mer","Gio","Ven","Sab","Dom"];
+
+  function iso(d){var m=d.getMonth()+1,g=d.getDate();return d.getFullYear()+"-"+(m<10?"0":"")+m+"-"+(g<10?"0":"")+g;}
+  function daIso(s){var p=s.split("-");return new Date(+p[0],+p[1]-1,+p[2]);}
+  function fmt(s){var p=s.split("-");return p[2]+"/"+p[1]+"/"+p[0];}
+  function prenotabile(s){ return (!input.min||s>=input.min)&&(!input.max||s<=input.max); }
+
+  var oggi=iso(new Date());
+  var mese=daIso(input.value||input.min||oggi); mese.setDate(1);
+
+  function updateLabel(){
+    if(input.value){ label.textContent=fmt(input.value); view.classList.remove("placeholder"); }
+    else { label.textContent="Scegli il giorno"; view.classList.add("placeholder"); }
+  }
+
+  function render(){
+    var y=mese.getFullYear(), m=mese.getMonth();
+    var primo=iso(new Date(y,m,1)), ultimo=iso(new Date(y,m+1,0));
+    var prima=!input.min||primo>input.min.slice(0,8)+"01";   // c'è un mese prima da mostrare?
+    var dopo=!input.max||ultimo<input.max;                    // e uno dopo?
+    var h='<div class="cal-head">'+
+          '<button type="button" class="cal-nav" data-nav="-1" aria-label="Mese precedente"'+(prima?'':' disabled')+'>‹</button>'+
+          '<div class="cal-title">'+MESI[m]+' '+y+'</div>'+
+          '<button type="button" class="cal-nav" data-nav="1" aria-label="Mese successivo"'+(dopo?'':' disabled')+'>›</button></div>'+
+          '<div class="cal-grid">';
+    for(var i=0;i<7;i++) h+='<div class="cal-dow">'+DOW[i]+'</div>';
+    for(var e=(new Date(y,m,1).getDay()+6)%7;e>0;e--) h+='<div class="cal-day empty"></div>';   // lunedì = 0
+    for(var g=1;g<=new Date(y,m+1,0).getDate();g++){
+      var s=iso(new Date(y,m,g)), ok=prenotabile(s), cls="cal-day";
+      if(!ok) cls+=" off";
+      if(s===oggi) cls+=" today";
+      if(s===input.value) cls+=" sel";
+      h+='<div class="'+cls+'"'+(ok?' data-day="'+s+'" role="button" tabindex="0"':' aria-disabled="true"')+'>'+g+'</div>';
+    }
+    cal.innerHTML=h+'</div>';
+  }
+
+  function open(){ if(input.value){ mese=daIso(input.value); mese.setDate(1); } render(); cal.hidden=false; view.setAttribute("aria-expanded","true"); }
+  function close(){ cal.hidden=true; view.setAttribute("aria-expanded","false"); }
+  function scegli(s){ input.value=s; updateLabel(); input.dispatchEvent(new Event("change")); close(); view.focus(); }
+
+  view.addEventListener("click",function(e){ e.stopPropagation(); if(cal.hidden) open(); else close(); });
+  cal.addEventListener("click",function(e){
+    e.stopPropagation();
+    var t=e.target.closest("[data-nav],[data-day]"); if(!t||t.disabled) return;
+    if(t.hasAttribute("data-nav")){ mese=new Date(mese.getFullYear(),mese.getMonth()+(+t.getAttribute("data-nav")),1); render(); return; }
+    scegli(t.getAttribute("data-day"));
+  });
+  cal.addEventListener("keydown",function(e){
+    var t=e.target; if((e.key==="Enter"||e.key===" ")&&t.hasAttribute("data-day")){ e.preventDefault(); scegli(t.getAttribute("data-day")); }
+  });
+  document.addEventListener("click",function(){ if(!cal.hidden) close(); });
+  document.addEventListener("keydown",function(e){ if(e.key==="Escape"&&!cal.hidden){ close(); view.focus(); } });
+
+  updateLabel();   // mostra la data già impostata all'avvio (oggi, o domani a fine serata)
 })();
 </script>
 <!-- Iubenda I Love Meat: banner cookie + loader policy -->
