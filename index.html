@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Tagliata di Fassona Piemontese 19,90€ — Venerdì 14 Agosto | I Love Meat Pianezza</title>
-<meta name="description" content="Venerdì 14 agosto a cena da I Love Meat, Pianezza: tagliata di fassona piemontese alla brace a 19,90€, contorno e calice di vino inclusi. 25 coupon disponibili, prenota il tavolo.">
+<title>Tagliata di Fassona Piemontese 19,90€ — a cena fino a fine settembre | I Love Meat Pianezza</title>
+<meta name="description" content="A cena da I Love Meat, Pianezza, fino a fine settembre: tagliata di fassona piemontese alla brace a 19,90€, contorno e calice di vino inclusi. 25 coupon a settimana, prenota il tavolo.">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -70,6 +70,11 @@ a{color:inherit}
 .hero h1{font-size:clamp(46px,13vw,196px);text-shadow:0 2px 10px rgba(0,0,0,.85),0 4px 40px rgba(0,0,0,.75)}
 .hero h1 .l2{color:var(--red)}
 .hero .lead{color:#f4ece3;font-size:19px;max-width:42ch;margin:24px auto 32px;text-shadow:0 1px 6px rgba(0,0,0,.9),0 2px 20px rgba(0,0,0,.8)}
+/* Scarsità sopra al bottone: grande, in oro e in Anton come nella landing
+   bombette, così è l'ultima cosa che si legge prima del clic. */
+.hero .coupon-disp{font-family:"Anton","Arial Narrow",sans-serif;font-weight:400;text-transform:uppercase;
+  letter-spacing:.03em;line-height:1.05;font-size:clamp(26px,5.2vw,40px);
+  color:var(--gold);margin:0 auto 18px;max-width:22ch;text-shadow:0 2px 12px rgba(0,0,0,.8)}
 .hero .cta-row{display:flex;align-items:center;justify-content:center;gap:22px;flex-wrap:wrap}
 .hero .rate{font-size:13.5px;color:#cfc6bc;text-shadow:0 1px 10px rgba(0,0,0,.8)}
 .hero .rate b{color:#fff}
@@ -103,6 +108,7 @@ a{color:inherit}
   .hero .badge{margin-bottom:14px}
   .hero h1{font-size:clamp(64px,8.6vw,124px)}
   .hero .lead{font-size:18px;margin:18px auto 26px}
+  .hero .coupon-disp{font-size:clamp(28px,2.6vw,40px);margin-bottom:14px}
 }
 @media (min-width:1000px) and (max-height:820px){
   .hero h1{font-size:clamp(56px,7.4vw,104px)}
@@ -292,9 +298,10 @@ src="https://www.facebook.com/tr?id=1752658912398511&ev=PageView&noscript=1"
 <header class="hero">
   <img class="hero-bg" src="hero.jpg" alt="Costata di manzo marezzata davanti alla brace da I Love Meat" onerror="this.style.display='none'">
   <div class="wrap hero-inner">
-    <span class="badge"><span class="dot"></span>Venerdì 14 agosto, a cena</span>
+    <span class="badge"><span class="dot"></span>Tutte le sere, a cena</span>
     <h1 class="display">La vera tagliata<br>di <span class="l2">Fassona Piemontese</span></h1>
     <p class="lead">Tagliata di vera fassona piemontese, cotta sulla brace. Una così morbida e succosa non l'hai mai mangiata: vieni a provarla da I Love Meat.</p>
+    <p class="coupon-disp">25 coupon a settimana fino a fine settembre</p>
     <div class="cta-row">
       <a class="btn" href="#book">Riserva il coupon</a>
       <div class="rate"><span class="stars">★★★★★</span><br><b>4.9</b> · 500+ carnivori soddisfatti</div>
@@ -309,17 +316,17 @@ src="https://www.facebook.com/tr?id=1752658912398511&ev=PageView&noscript=1"
     <div class="offer">
       <div class="offer-testo">
         <h2 class="display offer-title">
-          <span class="pre">Solo venerdì 14 agosto, a cena</span>
+          <span class="pre">Tutte le sere, a cena</span>
           Tagliata di <span class="l2">Fassona Piemontese</span>
         </h2>
         <p class="sfida display">Tu siediti.<br><span class="l2">Alla brace pensiamo noi.</span></p>
-        <p class="desc">Tagliata cotta sulla brace a fuoco vivo, servita con <b>contorno e un calice di vino</b>. In esclusiva solo per venerdì 14 agosto.</p>
+        <p class="desc">Tagliata cotta sulla brace a fuoco vivo, servita con <b>contorno e un calice di vino</b>. Fino a fine settembre.</p>
         <ul class="inclusi">
           <li>Contorno</li>
           <li>Calice di vino</li>
         </ul>
         <div class="price"><span class="pre">A soli</span><s>30€</s>19,90€</div>
-        <p class="valida">25 coupon disponibili</p>
+        <p class="valida">25 coupon a settimana</p>
         <a class="btn" href="#book">Riserva il coupon</a>
       </div>
       <figure class="offer-foto">
@@ -334,13 +341,13 @@ src="https://www.facebook.com/tr?id=1752658912398511&ev=PageView&noscript=1"
   <div class="wrap">
     <div class="book-head">
       <span class="kicker">Prenota</span>
-      <h2 class="display">Il tuo tavolo di venerdì</h2>
-      <p class="quando">Venerdì 14 agosto, a cena.</p>
+      <h2 class="display">Il tuo tavolo</h2>
+      <p class="quando">Tutte le sere a cena, fino al 30 settembre.</p>
     </div>
 
     <div class="book" id="book" aria-label="Prenota il tavolo">
       <div class="field">
-        <label for="data">1 · Data <span class="opt">(venerdì 14 agosto)</span></label>
+        <label for="data">1 · Data</label>
         <input type="date" id="data" required>
       </div>
       <div class="field">
@@ -427,7 +434,7 @@ src="https://www.facebook.com/tr?id=1752658912398511&ev=PageView&noscript=1"
     <h2 class="display">Trovaci qui</h2>
     <div class="find-grid">
       <div class="hours">
-        <div class="row evento"><span>Venerdì 14 agosto</span><span>a cena, dalle 19:30</span></div>
+        <div class="row evento"><span>Tagliata, fino al 30 settembre</span><span>tutte le sere, dalle 19:30</span></div>
         <div class="row addr"><span>Indirizzo</span><a href="https://www.google.com/maps/search/?api=1&query=Largo+II+Giugno+2+Pianezza+TO" target="_blank" rel="noopener">Largo II Giugno 2, Pianezza (TO)</a></div>
       </div>
       <div class="map">
@@ -461,9 +468,11 @@ window.LP_CONFIG = (function () {
     phone: "+393456881360",
     // URL dell'app Google Apps Script che scrive nel foglio (link "/exec")
     sheetUrl: "https://script.google.com/macros/s/AKfycbyCVTPWs0z8ZCcdUy3e2j_WC8bWwWa2U4u-LCbhEfsFxL3ErGv2zX8V0OzVZi_Rl6j0Zg/exec",
-    // Serata unica: il calendario è bloccato su venerdì 14 agosto, non si può
-    // prenotare per altre sere. Per aprire più giorni, svuotare fixedDate.
-    fixedDate: "2026-08-14",
+    // Si prenota qualsiasi sera da oggi a fine offerta. Per bloccare una sola
+    // data, scriverla in fixedDate (formato AAAA-MM-GG); vuoto = tutte le sere.
+    fixedDate: "",
+    // Ultimo giorno prenotabile: dopo questa data il calendario non va oltre.
+    endDate: "2026-09-30",
     // Solo cena: nessun orario di pranzo. Rimettendone qui, ricompaiono nel menu.
     lunch: [],
     dinner: ["19:30","20:00","20:30","21:00","21:30","22:00","22:30"],
@@ -478,15 +487,15 @@ window.LP_CONFIG = (function () {
 })();
 
 /* ====== LOGICA PRENOTAZIONE (collegata al Google Sheet) ======
-   Serata unica: la data è bloccata su venerdì 14 agosto e gli orari sono solo
-   di cena. Resta la scelta dell'orario, che al ristorante serve per distribuire
-   i tavoli. */
+   Tutte le sere fino a endDate, solo orari di cena. La scelta dell'orario
+   al ristorante serve per distribuire i tavoli. */
 (function () {
   var C = window.LP_CONFIG || {};
   var PHONE = C.phone || "+393456881360";
   var SHEET_URL = (C.sheetUrl && C.sheetUrl.indexOf("http")===0) ? C.sheetUrl : "";
   var OFFER_TAG = C.offerTag || "Tagliata";
   var FIXED_DATE = C.fixedDate || "";   // giorno unico dell'offerta ("" = tutte le sere)
+  var END_DATE = C.endDate || "";       // ultimo giorno prenotabile ("" = nessun limite)
   var LUNCH = C.lunch || [];            // vuoto: si prenota solo a cena
   var DINNER = C.dinner || ["19:30","20:00","20:30","21:00","21:30","22:00","22:30"];
   var ALL_SLOTS = LUNCH.concat(DINNER);
@@ -506,7 +515,9 @@ window.LP_CONFIG = (function () {
     dateEl.min=dateEl.max=dateEl.value=FIXED_DATE;
   } else {
     var oggi=new Date(); oggi.setHours(0,0,0,0);
-    dateEl.min=iso(oggi); if(!dateEl.value) dateEl.value=iso(oggi);
+    dateEl.min=iso(oggi);
+    if(END_DATE) dateEl.max=END_DATE;
+    if(!dateEl.value) dateEl.value=iso(oggi);
   }
 
   for(var n=1;n<=20;n++){var o=document.createElement("option");o.value=n;o.textContent=n+(n===1?" persona":" persone");peopleEl.appendChild(o);}
@@ -542,8 +553,14 @@ window.LP_CONFIG = (function () {
     validate();
   }
 
+  // Alcuni browser lasciano scrivere a mano una data fuori dai limiti del
+  // calendario: la si ricontrolla qui, sennò finirebbe nel foglio.
+  function dataValida(d){
+    return !!d && (!dateEl.min || d>=dateEl.min) && (!dateEl.max || d<=dateEl.max);
+  }
+
   function validate(){
-    var ok=dateEl.value&&peopleEl.value&&slotInput.value&&nameEl.value.trim().length>=2&&phoneEl.value.trim().length>=6&&privacyEl.checked;
+    var ok=dataValida(dateEl.value)&&peopleEl.value&&slotInput.value&&nameEl.value.trim().length>=2&&phoneEl.value.trim().length>=6&&privacyEl.checked;
     if(ctaEl) ctaEl.disabled=!ok; return ok;
   }
   function fmtDate(s){var p=s.split("-");return p[2]+"/"+p[1]+"/"+p[0];}
@@ -611,6 +628,13 @@ window.LP_CONFIG = (function () {
   privacyEl.addEventListener("change",validate);
   ctaEl.addEventListener("click",submit);
   var cl=$("call-link"); if(cl) cl.href="tel:"+PHONE;
+
+  // A fine serata gli orari di oggi sono tutti passati: il form si apre
+  // direttamente su domani, se rientra ancora nell'offerta.
+  if(!FIXED_DATE && ALL_SLOTS.every(function(s){ return slotState(dateEl.value,s); })){
+    var domani=new Date(); domani.setHours(0,0,0,0); domani.setDate(domani.getDate()+1);
+    if(!END_DATE || iso(domani)<=END_DATE){ dateEl.min=dateEl.value=iso(domani); }
+  }
 
   renderSlots();
 })();
