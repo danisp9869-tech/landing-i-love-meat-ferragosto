@@ -70,6 +70,20 @@ a{color:inherit}
 .hero h1{font-size:clamp(46px,13vw,196px);text-shadow:0 2px 10px rgba(0,0,0,.85),0 4px 40px rgba(0,0,0,.75)}
 .hero h1 .l2{color:var(--red)}
 .hero .lead{color:#f4ece3;font-size:19px;max-width:42ch;margin:24px auto 32px;text-shadow:0 1px 6px rgba(0,0,0,.9),0 2px 20px rgba(0,0,0,.8)}
+/* L'offerta sale nell'hero, come nella landing bombette: sottotitolo in
+   grassetto, cosa è incluso e prezzo. Stessi segnali della card più in basso
+   (spunta oro, pieno barrato in rosso, scontato in oro), così chi scorre li
+   riconosce invece di leggere due linguaggi diversi per la stessa offerta. */
+.hero .offerta-hero{font-weight:700;margin-bottom:14px}
+.hero .inclusi-hero{list-style:none;display:inline-flex;flex-direction:column;gap:6px;margin:0 0 6px;text-align:left}
+.hero .inclusi-hero li{position:relative;padding-left:28px;color:#fff;font-size:18px;font-weight:700;
+  text-shadow:0 1px 6px rgba(0,0,0,.9)}
+.hero .inclusi-hero li::before{content:"✓";position:absolute;left:0;top:-1px;color:var(--gold);font-weight:800}
+.hero .prezzo-hero{margin:4px 0 16px;color:var(--gold);font-family:"Anton","Arial Narrow",sans-serif;line-height:1;
+  letter-spacing:.02em;font-size:clamp(42px,7.4vw,86px);text-shadow:0 2px 12px rgba(0,0,0,.7)}
+.hero .prezzo-hero .pre{margin-right:10px;font-family:"Inter",sans-serif;font-size:17px;font-weight:600;color:#cfc6bc;vertical-align:middle}
+.hero .prezzo-hero s{margin-right:10px;color:#cfc6bc;font-size:.55em;vertical-align:middle;
+  text-decoration-line:line-through;text-decoration-color:var(--red);text-decoration-thickness:.1em}
 /* Scarsità sopra al bottone: grande, in oro e in Anton come nella landing
    bombette, così è l'ultima cosa che si legge prima del clic. */
 .hero .coupon-disp{font-family:"Anton","Arial Narrow",sans-serif;font-weight:400;text-transform:uppercase;
@@ -109,6 +123,8 @@ a{color:inherit}
   .hero h1{font-size:clamp(64px,8.6vw,124px)}
   .hero .lead{font-size:18px;margin:18px auto 26px}
   .hero .coupon-disp{font-size:clamp(28px,2.6vw,40px);margin-bottom:14px}
+  .hero .offerta-hero{margin-bottom:10px}
+  .hero .prezzo-hero{font-size:clamp(34px,4.3vw,60px);margin-bottom:12px}
 }
 @media (min-width:1000px) and (max-height:820px){
   .hero h1{font-size:clamp(56px,7.4vw,104px)}
@@ -300,7 +316,12 @@ src="https://www.facebook.com/tr?id=1752658912398511&ev=PageView&noscript=1"
   <div class="wrap hero-inner">
     <span class="badge"><span class="dot"></span>Tutte le sere, a cena</span>
     <h1 class="display">La vera tagliata<br>di <span class="l2">Fassona Piemontese</span></h1>
-    <p class="lead">Tagliata di vera fassona piemontese, cotta sulla brace. Una così morbida e succosa non l'hai mai mangiata: vieni a provarla da I Love Meat.</p>
+    <p class="lead offerta-hero">Tagliata cotta sulla brace a fuoco vivo, servita con contorno e un calice di vino. Fino a fine settembre.</p>
+    <ul class="inclusi-hero">
+      <li>Contorno</li>
+      <li>Calice di vino</li>
+    </ul>
+    <p class="prezzo-hero"><span class="pre">A soli</span><s>30€</s>19,90€</p>
     <p class="coupon-disp">25 coupon a settimana fino a fine settembre</p>
     <div class="cta-row">
       <a class="btn" href="#book">Riserva il coupon</a>
