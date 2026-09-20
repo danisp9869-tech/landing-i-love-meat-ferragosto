@@ -228,6 +228,10 @@ a{color:inherit}
 .book-head h2{font-size:clamp(30px,5.4vw,58px);margin:6px auto 0;max-width:18ch}
 .book-head .badge{margin-top:14px}
 /* Data e orario non sono più campi del form: restano scritti qui sopra */
+/* Spiegazione sotto il titolo: deve leggersi prima di compilare, quindi chiara
+   e non grigia come la riga degli orari. Il vincolo della data in grassetto. */
+.book-head .spiega{margin:14px auto 0;max-width:46ch;color:#ded6cc;font-size:16px;line-height:1.5}
+.book-head .spiega b{color:#fff}
 .book-head .quando{margin-top:12px;color:var(--muted);font-size:15px}
 /* card bianca: dentro serve tutta la scala di colori invertita rispetto al resto */
 .book{--ink:#1c1512;--ink-soft:#6d635b;--field:#f4f0ec;--bordo:#ddd4cb;
@@ -361,6 +365,7 @@ src="https://www.facebook.com/tr?id=1752658912398511&ev=PageView&noscript=1"
   <div class="wrap">
     <div class="book-head">
       <h2 class="display">Riserva il tuo coupon e riscatta l'offerta</h2>
+      <p class="spiega">Compilando il form prenoti un tavolo a tuo nome e potrai usufruire del coupon. <b>Sarà valido solo per la data inserita.</b></p>
       <p class="quando">Tutte le sere a cena, fino al 30 settembre.</p>
     </div>
 
