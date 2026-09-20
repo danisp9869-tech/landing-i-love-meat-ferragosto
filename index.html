@@ -297,6 +297,12 @@ a{color:inherit}
 .success p{color:var(--ink-soft);font-size:15px}
 .success .det{margin-top:16px;background:var(--field);border:1px solid var(--bordo);border-radius:10px;padding:14px;text-align:left;font-size:15px;line-height:1.9}
 .success .det span{color:var(--ink-soft)}
+/* Richiesta di disdetta: sta sotto il riepilogo, staccata da una riga, con un
+   fondo appena acceso. Deve leggersi come una cortesia, non come una penale. */
+.success .disdetta{margin-top:14px;padding:12px 14px;background:rgba(209,10,28,.06);
+  border:1px solid rgba(209,10,28,.25);border-radius:10px;color:var(--ink-soft);
+  font-size:14px;line-height:1.5;text-align:left}
+.success .disdetta b{color:var(--ink)}
 .success .again{display:inline-block;margin-top:14px;color:var(--red);font-size:14px;text-decoration:none}
 
 /* ---- FOOTER ---- */
@@ -629,7 +635,7 @@ window.LP_CONFIG = (function () {
     fbTrack("Lead"); // conversione: prenotazione completata
     bookEl.innerHTML=
       '<div class="success"><div class="ok">✓</div>'+
-      '<h3>Tavolo prenotato, '+nome.split(" ")[0]+'!</h3>'+
+      '<h3>Il tuo tavolo è pronto</h3>'+
       '<p>Ti aspettiamo da I Love Meat per la Tagliata di Fassona Piemontese. Se serve ti chiamiamo per confermare.</p>'+
       '<div class="det">'+
         '<div><span>Data:</span> '+fmtDate(date)+'</div>'+
@@ -638,6 +644,7 @@ window.LP_CONFIG = (function () {
         '<div><span>A nome di:</span> '+nome+'</div>'+
         '<div><span>Telefono:</span> '+tel+'</div>'+
       '</div>'+
+      '<p class="disdetta">La tua prenotazione costituisce un tavolo riservato. Noi di I Love Meat cerchiamo sempre di fare il meglio per voi: per questo, <b>in caso di disdetta vi chiediamo di avvisarci in anticipo</b>, per garantire sempre il miglior servizio per tutti.</p>'+
       '<a class="again" href="tel:'+PHONE+'">Preferisci confermare a voce? Chiamaci</a></div>';
     bookEl.scrollIntoView({behavior:"smooth",block:"center"});
   }
