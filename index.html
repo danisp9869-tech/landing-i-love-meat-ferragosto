@@ -422,7 +422,7 @@ src="https://www.facebook.com/tr?id=1752658912398511&ev=PageView&noscript=1"
         <span>Acconsento a ricevere offerte, promozioni e comunicazioni commerciali del ristorante tramite i recapiti da me forniti, come indicato nell'<a href="https://www.iubenda.com/privacy-policy/46821789" class="iubenda-noiframe iubenda-embed" title="Informativa Privacy">Informativa Privacy</a>. Il consenso è facoltativo e può essere revocato in qualsiasi momento.</span>
       </label>
 
-      <button class="cta" id="cta" disabled>Riserva il coupon</button>
+      <button class="cta" id="cta" disabled>Prenota un tavolo</button>
       <div class="err" id="err"></div>
     </div>
 
@@ -671,7 +671,7 @@ window.LP_CONFIG = (function () {
       .then(function(){ showSuccess(date,people,slot,nome,tel); })
       .catch(function(){
         // Rete non disponibile: invita a chiamare, senza perdere la prenotazione
-        ctaEl.disabled=false; ctaEl.textContent="Riserva il coupon";
+        ctaEl.disabled=false; ctaEl.textContent="Prenota un tavolo";
         errEl.textContent="Connessione assente. Chiamaci per confermare: "+PHONE;
       });
   }
