@@ -304,6 +304,7 @@ a{color:inherit}
   font-size:14px;line-height:1.5;text-align:left}
 .success .disdetta b{color:var(--ink)}
 .success .again{display:inline-block;margin-top:14px;color:var(--red);font-size:14px;text-decoration:none}
+.success .valid-note{margin-top:8px;color:var(--red);font-weight:700;font-size:14.5px}
 
 /* ---- FOOTER ---- */
 /* i 24px laterali vanno ripetuti: .foot viene dopo .wrap e con lo shorthand
@@ -637,6 +638,7 @@ window.LP_CONFIG = (function () {
       '<div class="success"><div class="ok">✓</div>'+
       '<h3>Il tuo tavolo è pronto</h3>'+
       '<p>Ti aspettiamo da I Love Meat per la Tagliata di Fassona Piemontese.</p>'+
+      '<p class="valid-note">Il coupon sarà valido solo per la data che hai inserito.</p>'+
       '<div class="det">'+
         '<div><span>Data:</span> '+fmtDate(date)+'</div>'+
         '<div><span>Orario:</span> '+slot+'</div>'+
