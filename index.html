@@ -235,6 +235,7 @@ a{color:inherit}
 .book-head .spiega b{color:#fff}
 .book-head .quando{margin-top:12px;color:var(--muted);font-size:15px}
 /* card bianca: dentro serve tutta la scala di colori invertita rispetto al resto */
+.book-embed{max-width:520px;margin:0 auto}
 .book{--ink:#1c1512;--ink-soft:#6d635b;--field:#f4f0ec;--bordo:#ddd4cb;
   max-width:520px;margin:0 auto;background:#fff;border:1px solid #e6ded6;border-radius:20px;padding:22px;
   color:var(--ink);box-shadow:0 20px 50px rgba(0,0,0,.45)}
@@ -377,55 +378,29 @@ src="https://www.facebook.com/tr?id=1752658912398511&ev=PageView&noscript=1"
       <p class="quando">Tutte le sere a cena, fino al 30 settembre.</p>
     </div>
 
-    <div class="book" id="book" aria-label="Prenota il tavolo">
-      <div class="field">
-        <label for="dataView">1 · Data</label>
-        <div class="date-wrap">
-          <button type="button" id="dataView" class="date-view placeholder" aria-haspopup="dialog" aria-expanded="false"><span id="dataViewLabel">Scegli il giorno</span></button>
-          <div class="cal" id="cal" role="dialog" aria-label="Scegli il giorno" hidden></div>
-          <input type="date" id="data" required>
-        </div>
-      </div>
-      <div class="field">
-        <label for="persone">2 · Quante persone</label>
-        <select id="persone" required></select>
-      </div>
-      <div class="field">
-        <label for="orario">3 · Orario</label>
-        <select id="orario" required></select>
-      </div>
-      <div class="grid2">
-        <div class="field">
-          <label for="nome">4 · Il tuo nome</label>
-          <input type="text" id="nome" autocomplete="name" placeholder="Nome e cognome" required>
-        </div>
-        <div class="field">
-          <label for="telefono">Telefono</label>
-          <input type="tel" id="telefono" autocomplete="tel" placeholder="Es. 345 688 1360" required>
-        </div>
-      </div>
-      <div class="field">
-        <label for="email">Email</label>
-        <input type="email" id="email" autocomplete="email" placeholder="La tua email">
-      </div>
-      <div class="field">
-        <label for="richieste">Richieste particolari <span class="opt">(facoltativo)</span></label>
-        <input type="text" id="richieste" placeholder="Allergie, seggiolone, tavolo esterno…">
-      </div>
-      <label class="privacy" for="privacy">
-        <input type="checkbox" id="privacy">
-        <span>Ho letto e accetto l'<a href="https://www.iubenda.com/privacy-policy/46821789" class="iubenda-noiframe iubenda-embed" title="Informativa sulla Privacy">Informativa sulla Privacy</a>.</span>
-      </label>
-
-      <!-- Consenso marketing FACOLTATIVO: non entra nella validazione, il tasto resta attivo -->
-      <label class="privacy optional" for="marketing">
-        <input type="checkbox" id="marketing">
-        <span>Acconsento a ricevere offerte, promozioni e comunicazioni commerciali del ristorante tramite i recapiti da me forniti, come indicato nell'<a href="https://www.iubenda.com/privacy-policy/46821789" class="iubenda-noiframe iubenda-embed" title="Informativa Privacy">Informativa Privacy</a>. Il consenso è facoltativo e può essere revocato in qualsiasi momento.</span>
-      </label>
-
-      <button class="cta" id="cta" disabled>Prenota un tavolo</button>
-      <div class="err" id="err"></div>
+    <!-- Prenotazioni gestite da Dinevo: il form qui dentro è loro, non nostro.
+         L'id "book" resta su questo contenitore perché tutti i bottoni della
+         pagina puntano a #book. Il riquadro si alza da solo: Dinevo manda
+         l'altezza con un postMessage e lo script qui sotto la applica. -->
+    <div id="book" class="book-embed">
+      <iframe
+        id="dinevo-booking"
+        src="https://api.dinevo.it/embed/r/est_e33a5577-5dea-4ff8-af37-250f70a276a0?promotion=promo_bc45731a-208a-4dc9-839a-88d1b5523921"
+        title="Prenota un tavolo"
+        height="900"
+        style="width: 100%; border: 0; border-radius: 22px; overflow: hidden"
+      ></iframe>
     </div>
+    <script>
+      window.addEventListener('message', function (event) {
+        if (!event.data || event.data.type !== 'dinevo:booking-height') return;
+        var frame = document.getElementById('dinevo-booking');
+        if (!frame) return;
+        var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        if (!reduce) frame.style.transition = 'height 0.2s ease';
+        frame.style.height = event.data.height + 'px';
+      });
+    </script>
 
   </div>
 </section>
