@@ -338,6 +338,9 @@ s.parentNode.insertBefore(t,s)}(window, document,'script',
 'https://connect.facebook.net/en_US/fbevents.js');
 // Un solo pixel: quello del ristorante, condiviso con degustazione e pranzo.
 // PageView, InitiateCheckout e Lead vengono inviati qui.
+// niente eventi "indovinati" da Meta sui clic dei bottoni: le conversioni le
+// decide solo questo codice (un clic su "Prenota" non è una prenotazione)
+fbq('set', 'autoConfig', false, '1752658912398511');
 fbq('init', '1752658912398511');
 fbq('track', 'PageView');
 </script>
@@ -415,10 +418,14 @@ src="https://www.facebook.com/tr?id=1752658912398511&ev=PageView&noscript=1"
           if (!event.data || event.data.type !== 'dinevo:booking-confirmed') return;
           var frame = document.getElementById('dinevo-booking');
           if (!frame || event.source !== frame.contentWindow) return;
-          // la campagna Meta ottimizza su "Contatti" (Contact): va inviato a ogni prenotazione confermata
-          window.fbq('track', 'Contact');
-          window.fbq('track', 'Schedule');
-          window.fbq('track', 'Purchase', { value: 0, currency: 'EUR' });
+          // Prenotazione confermata: è l'unico momento in cui parte una conversione.
+          // La campagna ottimizza su Lead; Contact e Schedule restano per lo storico.
+          // Lo stesso eventID permette a Meta di scartare i doppioni browser/server.
+          var id = 'pren-' + Date.now() + '-' + Math.random().toString(36).slice(2, 8);
+          window.fbq('track', 'Lead', {}, { eventID: id });
+          window.fbq('track', 'Contact', {}, { eventID: id });
+          window.fbq('track', 'Schedule', {}, { eventID: id });
+          window.fbq('track', 'Purchase', { value: 0, currency: 'EUR' }, { eventID: id });
         });
       }
     </script>
